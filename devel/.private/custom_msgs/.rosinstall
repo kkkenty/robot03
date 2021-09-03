@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/kento/robot03/devel/.private/custom_msgs/setup.sh

@@ -1,0 +1,6 @@
+robot03
+/home/kento/robot03/devel/.private/robot03/cmake.lock /home/kento/robot03/devel/./cmake.lock
+/home/kento/robot03/devel/.private/robot03/share/robot03/cmake/robot03Config.cmake /home/kento/robot03/devel/share/robot03/cmake/robot03Config.cmake
+/home/kento/robot03/devel/.private/robot03/share/robot03/cmake/robot03Config-version.cmake /home/kento/robot03/devel/share/robot03/cmake/robot03Config-version.cmake
+/home/kento/robot03/devel/.private/robot03/lib/robot03/controller /home/kento/robot03/devel/lib/robot03/controller
+/home/kento/robot03/devel/.private/robot03/lib/pkgconfig/robot03.pc /home/kento/robot03/devel/lib/pkgconfig/robot03.pc
