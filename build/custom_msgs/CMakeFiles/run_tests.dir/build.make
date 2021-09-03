@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/kento/robot03/src/custom_msgs
+CMAKE_SOURCE_DIR = /home/robot03/robot03/src/custom_msgs
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/kento/robot03/build/custom_msgs
+CMAKE_BINARY_DIR = /home/robot03/robot03/build/custom_msgs
 
 # Utility rule file for run_tests.
 
@@ -67,6 +67,6 @@ CMakeFiles/run_tests.dir/clean:
 .PHONY : CMakeFiles/run_tests.dir/clean
 
 CMakeFiles/run_tests.dir/depend:
-	cd /home/kento/robot03/build/custom_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kento/robot03/src/custom_msgs /home/kento/robot03/src/custom_msgs /home/kento/robot03/build/custom_msgs /home/kento/robot03/build/custom_msgs /home/kento/robot03/build/custom_msgs/CMakeFiles/run_tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/robot03/robot03/build/custom_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/robot03/robot03/src/custom_msgs /home/robot03/robot03/src/custom_msgs /home/robot03/robot03/build/custom_msgs /home/robot03/robot03/build/custom_msgs /home/robot03/robot03/build/custom_msgs/CMakeFiles/run_tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/run_tests.dir/depend
 

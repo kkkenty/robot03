@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/kento/robot03/src/robot03/src/controller.cpp" "/home/kento/robot03/build/robot03/CMakeFiles/controller.dir/src/controller.cpp.o"
+  "/home/robot03/robot03/src/robot03/src/controller.cpp" "/home/robot03/robot03/build/robot03/CMakeFiles/controller.dir/src/controller.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -17,7 +17,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/home/kento/robot03/devel/.private/custom_msgs/include"
+  "/home/robot03/robot03/devel/.private/custom_msgs/include"
   "/opt/ros/melodic/include"
   "/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   )

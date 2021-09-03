@@ -1,1 +1,1 @@
-/home/kento/robot03/devel/.private/catkin_tools_prebuild/setup.zsh
+/home/robot03/robot03/devel/.private/catkin_tools_prebuild/setup.zsh

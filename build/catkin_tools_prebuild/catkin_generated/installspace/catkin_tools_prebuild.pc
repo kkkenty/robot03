@@ -1,4 +1,4 @@
-prefix=/home/kento/robot03/install
+prefix=/home/robot03/robot03/install
 
 Name: catkin_tools_prebuild
 Description: Description of catkin_tools_prebuild

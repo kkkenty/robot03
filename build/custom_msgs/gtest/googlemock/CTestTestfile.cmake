@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
 # Source directory: /usr/src/googletest/googlemock
-# Build directory: /home/kento/robot03/build/custom_msgs/gtest/googlemock
+# Build directory: /home/robot03/robot03/build/custom_msgs/gtest/googlemock
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.

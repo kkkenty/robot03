@@ -54,14 +54,14 @@ PATH_TO_ADD_SUFFIX = ['bin']
 if IS_WINDOWS:
     # while catkin recommends putting dll's into bin, 3rd party packages often put dll's into lib
     # since Windows finds dll's via the PATH variable, prepend it with path to lib
-    PATH_TO_ADD_SUFFIX.extend([['lib', os.path.join('lib', 'x86_64-linux-gnu')]])
+    PATH_TO_ADD_SUFFIX.extend([['lib', os.path.join('lib', 'arm-linux-gnueabihf')]])
 
 # subfolder of workspace prepended to CMAKE_PREFIX_PATH
 ENV_VAR_SUBFOLDERS = {
     'CMAKE_PREFIX_PATH': '',
-    'LD_LIBRARY_PATH' if not IS_DARWIN else 'DYLD_LIBRARY_PATH': ['lib', os.path.join('lib', 'x86_64-linux-gnu')],
+    'LD_LIBRARY_PATH' if not IS_DARWIN else 'DYLD_LIBRARY_PATH': ['lib', os.path.join('lib', 'arm-linux-gnueabihf')],
     'PATH': PATH_TO_ADD_SUFFIX,
-    'PKG_CONFIG_PATH': [os.path.join('lib', 'pkgconfig'), os.path.join('lib', 'x86_64-linux-gnu', 'pkgconfig')],
+    'PKG_CONFIG_PATH': [os.path.join('lib', 'pkgconfig'), os.path.join('lib', 'arm-linux-gnueabihf', 'pkgconfig')],
     'PYTHONPATH': 'lib/python2.7/dist-packages',
 }
 
@@ -268,7 +268,7 @@ if __name__ == '__main__':
 
         if not args.local:
             # environment at generation time
-            CMAKE_PREFIX_PATH = r'/home/kento/robot03/devel;/home/kento/Turtlebot3/devel;/opt/ros/melodic;/home/kento/catkin_ws/devel'.split(';')
+            CMAKE_PREFIX_PATH = r'/opt/ros/melodic'.split(';')
         else:
             # don't consider any other prefix path than this one
             CMAKE_PREFIX_PATH = []

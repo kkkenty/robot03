@@ -1,18 +1,12 @@
-[  0%] Built target std_msgs_generate_messages_nodejs
-[  0%] Built target std_msgs_generate_messages_eus
-[  0%] Built target std_msgs_generate_messages_lisp
 [  0%] Built target std_msgs_generate_messages_cpp
 [  0%] Built target std_msgs_generate_messages_py
-[  0%] Built target _custom_msgs_generate_messages_check_deps_Motor_Pwm
-[ 28%] [34m[1mGenerating Lisp code from custom_msgs/Motor_Pwm.msg[0m
-[ 28%] [34m[1mGenerating Python from MSG custom_msgs/Motor_Pwm[0m
-[ 42%] [34m[1mGenerating C++ code from custom_msgs/Motor_Pwm.msg[0m
-[ 57%] [34m[1mGenerating Javascript code from custom_msgs/Motor_Pwm.msg[0m
-[ 71%] [34m[1mGenerating EusLisp code from custom_msgs/Motor_Pwm.msg[0m
-[ 71%] Built target custom_msgs_generate_messages_nodejs
-[ 71%] Built target custom_msgs_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target _custom_msgs_generate_messages_check_deps_motor_pwm
+[ 28%] Built target custom_msgs_generate_messages_cpp
+[ 28%] Built target custom_msgs_generate_messages_lisp
+[ 57%] Built target custom_msgs_generate_messages_py
 [ 85%] Built target custom_msgs_generate_messages_eus
-[100%] [34m[1mGenerating Python msg __init__.py for custom_msgs[0m
-[100%] Built target custom_msgs_generate_messages_cpp
-[100%] Built target custom_msgs_generate_messages_py
+[100%] Built target custom_msgs_generate_messages_nodejs
 [100%] Built target custom_msgs_generate_messages

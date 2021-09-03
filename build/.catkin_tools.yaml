@@ -1,6 +1,6 @@
-devel_space: /home/kento/robot03/devel
+devel_space: /home/robot03/robot03/devel
 install: false
-install_space: /home/kento/robot03/install
+install_space: /home/robot03/robot03/install
 profile: default
-source_space: /home/kento/robot03/src
-workspace: /home/kento/robot03
+source_space: /home/robot03/robot03/src
+workspace: /home/robot03/robot03

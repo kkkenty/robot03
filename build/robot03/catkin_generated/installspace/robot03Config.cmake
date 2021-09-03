@@ -67,14 +67,14 @@ set(robot03_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(robot03_SOURCE_PREFIX /home/kento/robot03/src/robot03)
-  set(robot03_DEVEL_PREFIX /home/kento/robot03/devel/.private/robot03)
+  set(robot03_SOURCE_PREFIX /home/robot03/robot03/src/robot03)
+  set(robot03_DEVEL_PREFIX /home/robot03/robot03/devel/.private/robot03)
   set(robot03_INSTALL_PREFIX "")
   set(robot03_PREFIX ${robot03_DEVEL_PREFIX})
 else()
   set(robot03_SOURCE_PREFIX "")
   set(robot03_DEVEL_PREFIX "")
-  set(robot03_INSTALL_PREFIX /home/kento/robot03/install)
+  set(robot03_INSTALL_PREFIX /home/robot03/robot03/install)
   set(robot03_PREFIX ${robot03_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/kento/robot03/install/lib;/home/kento/robot03/devel/lib;/home/kento/Turtlebot3/devel/lib;/opt/ros/melodic/lib;/home/kento/catkin_ws/devel/lib)
+    foreach(path /home/robot03/robot03/install/lib;/home/robot03/robot03/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
