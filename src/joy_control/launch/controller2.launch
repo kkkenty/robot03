@@ -1,0 +1,18 @@
+<launch>
+  <node name="joystick" pkg="joy" type="joy_node">
+    <param name="dev" value="/dev/input/js2"/>
+  </node>
+
+  <node name="controller2" pkg="joy_control" type="controller2" output="screen">
+	<param name="kP" value="200.0"/>
+	<param name="kv" value="1.0"/>
+	<param name="kw" value="1.0"/>
+	<param name="d"  value="0.2"/>
+  </node>
+
+  <node pkg="rosserial_python" type="serial_node.py" name="arduino">
+	<param name="port" value="/dev/ttyACM0"/>
+	<param name="baud" value="57600"/>
+  </node>
+
+</launch>
