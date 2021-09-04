@@ -12,8 +12,8 @@ void joy_callback(const sensor_msgs::Joy &joy_msg)
   if(joy_msg.buttons[0]){
     PWM.L = 0; PWM.R = 0;
   }
-  ROS_INFO("PWM.L:%d", (int)PWM.L);
-  ROS_INFO("PWM.R:%d", (int)PWM.R);
+  //ROS_INFO("PWM.L:%d", (int)PWM.L);
+  //ROS_INFO("PWM.R:%d", (int)PWM.R);
 }
 
 int main(int argc, char **argv)
@@ -25,7 +25,7 @@ int main(int argc, char **argv)
   pnh.getParam("MAX_R", MAX_R);
   ros::Subscriber sub = nh.subscribe("joy", 10, joy_callback);
   ros::Publisher pub = nh.advertise<custom_msgs::motor_pwm>("power", 1);
-  ros::Rate loop_rate(10);
+  ros::Rate loop_rate(100);
 
   while (ros::ok())
   {

@@ -1,3 +1,17 @@
-Symlinking /home/kento/robot03/devel/share/robot03/cmake/robot03Config.cmake
-Symlinking /home/kento/robot03/devel/share/robot03/cmake/robot03Config-version.cmake
-Symlinking /home/kento/robot03/devel/lib/pkgconfig/robot03.pc
+Symlinking /home/robot03/robot03/devel/share/robot03/cmake/robot03Config-version.cmake
+Symlinking /home/robot03/robot03/devel/share/robot03/cmake/robot03Config.cmake
+Symlinking /home/robot03/robot03/devel/lib/robot03/controller
+Symlinking /home/robot03/robot03/devel/lib/pkgconfig/robot03.pc
+Cleaning: (/home/kento/robot03/devel/.private/robot03/cmake.lock, /home/kento/robot03/devel/./cmake.lock)
+Cleaning: (/home/kento/robot03/devel/.private/robot03/share/robot03/cmake/robot03Config.cmake, /home/kento/robot03/devel/share/robot03/cmake/robot03Config.cmake)
+Cleaning: (/home/kento/robot03/devel/.private/robot03/share/robot03/cmake/robot03Config-version.cmake, /home/kento/robot03/devel/share/robot03/cmake/robot03Config-version.cmake)
+Cleaning: (/home/kento/robot03/devel/.private/robot03/lib/robot03/controller, /home/kento/robot03/devel/lib/robot03/controller)
+Cleaning: (/home/kento/robot03/devel/.private/robot03/lib/pkgconfig/robot03.pc, /home/kento/robot03/devel/lib/pkgconfig/robot03.pc)
+Unlinking: /home/kento/robot03/devel/share/robot03/cmake/robot03Config.cmake
+Already unlinked: {}
+Unlinking: /home/kento/robot03/devel/share/robot03/cmake/robot03Config-version.cmake
+Already unlinked: {}
+Unlinking: /home/kento/robot03/devel/lib/robot03/controller
+Already unlinked: {}
+Unlinking: /home/kento/robot03/devel/lib/pkgconfig/robot03.pc
+Already unlinked: {}

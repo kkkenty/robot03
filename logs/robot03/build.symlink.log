@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 Linked: (/home/kento/robot03/devel/.private/robot03/share/robot03/cmake/robot03Config.cmake, /home/kento/robot03/devel/share/robot03/cmake/robot03Config.cmake)
 Linked: (/home/kento/robot03/devel/.private/robot03/share/robot03/cmake/robot03Config-version.cmake, /home/kento/robot03/devel/share/robot03/cmake/robot03Config-version.cmake)
 Symlinking /home/kento/robot03/devel/lib/robot03/controller2
 Linked: (/home/kento/robot03/devel/.private/robot03/lib/robot03/controller, /home/kento/robot03/devel/lib/robot03/controller)
 Linked: (/home/kento/robot03/devel/.private/robot03/lib/pkgconfig/robot03.pc, /home/kento/robot03/devel/lib/pkgconfig/robot03.pc)
+=======
+Linked: (/home/robot03/robot03/devel/.private/robot03/share/robot03/cmake/robot03Config-version.cmake, /home/robot03/robot03/devel/share/robot03/cmake/robot03Config-version.cmake)
+Linked: (/home/robot03/robot03/devel/.private/robot03/share/robot03/cmake/robot03Config.cmake, /home/robot03/robot03/devel/share/robot03/cmake/robot03Config.cmake)
+Linked: (/home/robot03/robot03/devel/.private/robot03/lib/robot03/controller, /home/robot03/robot03/devel/lib/robot03/controller)
+Linked: (/home/robot03/robot03/devel/.private/robot03/lib/pkgconfig/robot03.pc, /home/robot03/robot03/devel/lib/pkgconfig/robot03.pc)
+>>>>>>> bb31925fc120175bf4cf6759046f3e846ab9d83e

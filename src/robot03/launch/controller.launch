@@ -1,9 +1,9 @@
 <launch>
   <node name="joystick" pkg="joy" type="joy_node">
-    <param name="dev" value="/dev/input/js2"/>
+    <param name="dev" value="/dev/input/js0"/>
   </node>
 
-  <node name="controller" pkg="robot03" type="controller" output="screen">
+  <node name="controller" pkg="robot03" type="controller">
 	<param name="MAX_L" value="200"/>
 	<param name="MAX_R" value="200"/>
   </node>

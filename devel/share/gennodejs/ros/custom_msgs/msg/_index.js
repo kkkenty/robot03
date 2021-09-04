@@ -1,1 +1,1 @@
-/home/kento/robot03/devel/.private/custom_msgs/share/gennodejs/ros/custom_msgs/msg/_index.js
+/home/robot03/robot03/devel/.private/custom_msgs/share/gennodejs/ros/custom_msgs/msg/_index.js

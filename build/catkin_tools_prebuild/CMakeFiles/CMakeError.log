@@ -1,24 +1,24 @@
 Determining if the pthread_create exist failed with the following output:
-Change Dir: /home/kento/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp
+Change Dir: /home/robot03/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_2f9b1/fast"
-/usr/bin/make -f CMakeFiles/cmTC_2f9b1.dir/build.make CMakeFiles/cmTC_2f9b1.dir/build
-make[1]: ディレクトリ '/home/kento/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp' に入ります
-Building C object CMakeFiles/cmTC_2f9b1.dir/CheckSymbolExists.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_2f9b1.dir/CheckSymbolExists.c.o   -c /home/kento/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp/CheckSymbolExists.c
-Linking C executable cmTC_2f9b1
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2f9b1.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_2f9b1.dir/CheckSymbolExists.c.o  -o cmTC_2f9b1 
-CMakeFiles/cmTC_2f9b1.dir/CheckSymbolExists.c.o: 関数 `main' 内:
-CheckSymbolExists.c:(.text+0x1b): `pthread_create' に対する定義されていない参照です
+Run Build Command:"/usr/bin/make" "cmTC_95ec2/fast"
+/usr/bin/make -f CMakeFiles/cmTC_95ec2.dir/build.make CMakeFiles/cmTC_95ec2.dir/build
+make[1]: Entering directory '/home/robot03/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_95ec2.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_95ec2.dir/CheckSymbolExists.c.o   -c /home/robot03/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_95ec2
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_95ec2.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_95ec2.dir/CheckSymbolExists.c.o  -o cmTC_95ec2 
+CMakeFiles/cmTC_95ec2.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x2c): undefined reference to `pthread_create'
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_2f9b1.dir/build.make:97: recipe for target 'cmTC_2f9b1' failed
-make[1]: *** [cmTC_2f9b1] Error 1
-make[1]: ディレクトリ '/home/kento/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp' から出ます
-Makefile:126: recipe for target 'cmTC_2f9b1/fast' failed
-make: *** [cmTC_2f9b1/fast] Error 2
+CMakeFiles/cmTC_95ec2.dir/build.make:97: recipe for target 'cmTC_95ec2' failed
+make[1]: *** [cmTC_95ec2] Error 1
+make[1]: Leaving directory '/home/robot03/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_95ec2/fast' failed
+make: *** [cmTC_95ec2/fast] Error 2
 
-File /home/kento/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+File /home/robot03/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
 /* */
 #include <pthread.h>
 
@@ -34,22 +34,22 @@ int main(int argc, char** argv)
 }
 
 Determining if the function pthread_create exists in the pthreads failed with the following output:
-Change Dir: /home/kento/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp
+Change Dir: /home/robot03/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_66b89/fast"
-/usr/bin/make -f CMakeFiles/cmTC_66b89.dir/build.make CMakeFiles/cmTC_66b89.dir/build
-make[1]: ディレクトリ '/home/kento/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp' に入ります
-Building C object CMakeFiles/cmTC_66b89.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_66b89.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
-Linking C executable cmTC_66b89
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_66b89.dir/link.txt --verbose=1
-/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_66b89.dir/CheckFunctionExists.c.o  -o cmTC_66b89 -lpthreads 
-/usr/bin/ld: -lpthreads が見つかりません
+Run Build Command:"/usr/bin/make" "cmTC_ca0e6/fast"
+/usr/bin/make -f CMakeFiles/cmTC_ca0e6.dir/build.make CMakeFiles/cmTC_ca0e6.dir/build
+make[1]: Entering directory '/home/robot03/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ca0e6.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_ca0e6.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
+Linking C executable cmTC_ca0e6
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ca0e6.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_ca0e6.dir/CheckFunctionExists.c.o  -o cmTC_ca0e6 -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_66b89.dir/build.make:97: recipe for target 'cmTC_66b89' failed
-make[1]: *** [cmTC_66b89] Error 1
-make[1]: ディレクトリ '/home/kento/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp' から出ます
-Makefile:126: recipe for target 'cmTC_66b89/fast' failed
-make: *** [cmTC_66b89/fast] Error 2
+CMakeFiles/cmTC_ca0e6.dir/build.make:97: recipe for target 'cmTC_ca0e6' failed
+make[1]: *** [cmTC_ca0e6] Error 1
+make[1]: Leaving directory '/home/robot03/robot03/build/catkin_tools_prebuild/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_ca0e6/fast' failed
+make: *** [cmTC_ca0e6/fast] Error 2
 
 

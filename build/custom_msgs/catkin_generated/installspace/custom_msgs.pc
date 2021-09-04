@@ -1,4 +1,4 @@
-prefix=/home/kento/robot03/install
+prefix=/home/robot03/robot03/install
 
 Name: custom_msgs
 Description: Description of custom_msgs

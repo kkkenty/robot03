@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/kento/robot03/devel/.private/custom_msgs/include/custom_msgs/motor_pwm.h
+/home/robot03/robot03/devel/.private/custom_msgs/include/custom_msgs/motor_pwm.h
 string
 -
 vector
@@ -22,7 +22,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/kento/robot03/src/robot03/src/controller.cpp
+/home/robot03/robot03/src/robot03/src/controller.cpp
 ros/ros.h
 -
 sensor_msgs/Joy.h

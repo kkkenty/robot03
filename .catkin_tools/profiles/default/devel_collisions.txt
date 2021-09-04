@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 /home/kento/robot03/devel/./cmake.lock 19
+=======
+/home/kento/robot03/devel/./cmake.lock 14
+/home/robot03/robot03/devel/./cmake.lock 14
+>>>>>>> bb31925fc120175bf4cf6759046f3e846ab9d83e
