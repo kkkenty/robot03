@@ -168,6 +168,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named controller2
+
+# Build rule for target.
+controller2: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 controller2
+.PHONY : controller2
+
+# fast build rule for target.
+controller2/fast:
+	$(MAKE) -f CMakeFiles/controller2.dir/build.make CMakeFiles/controller2.dir/build
+.PHONY : controller2/fast
+
+#=============================================================================
 # Target rules for targets named custom_msgs_generate_messages_nodejs
 
 # Build rule for target.
@@ -584,6 +597,33 @@ src/controller.cpp.s:
 	$(MAKE) -f CMakeFiles/controller.dir/build.make CMakeFiles/controller.dir/src/controller.cpp.s
 .PHONY : src/controller.cpp.s
 
+src/controller2.o: src/controller2.cpp.o
+
+.PHONY : src/controller2.o
+
+# target to build an object file
+src/controller2.cpp.o:
+	$(MAKE) -f CMakeFiles/controller2.dir/build.make CMakeFiles/controller2.dir/src/controller2.cpp.o
+.PHONY : src/controller2.cpp.o
+
+src/controller2.i: src/controller2.cpp.i
+
+.PHONY : src/controller2.i
+
+# target to preprocess a source file
+src/controller2.cpp.i:
+	$(MAKE) -f CMakeFiles/controller2.dir/build.make CMakeFiles/controller2.dir/src/controller2.cpp.i
+.PHONY : src/controller2.cpp.i
+
+src/controller2.s: src/controller2.cpp.s
+
+.PHONY : src/controller2.s
+
+# target to generate assembly for a file
+src/controller2.cpp.s:
+	$(MAKE) -f CMakeFiles/controller2.dir/build.make CMakeFiles/controller2.dir/src/controller2.cpp.s
+.PHONY : src/controller2.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -592,6 +632,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... controller2"
 	@echo "... custom_msgs_generate_messages_nodejs"
 	@echo "... custom_msgs_generate_messages_lisp"
 	@echo "... install/strip"
@@ -630,6 +671,9 @@ help:
 	@echo "... src/controller.o"
 	@echo "... src/controller.i"
 	@echo "... src/controller.s"
+	@echo "... src/controller2.o"
+	@echo "... src/controller2.i"
+	@echo "... src/controller2.s"
 .PHONY : help
 
 

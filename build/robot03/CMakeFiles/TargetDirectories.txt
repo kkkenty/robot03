@@ -1,5 +1,6 @@
 /home/kento/robot03/build/robot03/CMakeFiles/rebuild_cache.dir
 /home/kento/robot03/build/robot03/CMakeFiles/test.dir
+/home/kento/robot03/build/robot03/CMakeFiles/controller2.dir
 /home/kento/robot03/build/robot03/CMakeFiles/custom_msgs_generate_messages_nodejs.dir
 /home/kento/robot03/build/robot03/CMakeFiles/custom_msgs_generate_messages_lisp.dir
 /home/kento/robot03/build/robot03/CMakeFiles/install/strip.dir
