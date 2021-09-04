@@ -1,0 +1,4 @@
+Symlinking /home/kento/robot03/devel/share/joy_control/cmake/joy_controlConfig-version.cmake
+Symlinking /home/kento/robot03/devel/share/joy_control/cmake/joy_controlConfig.cmake
+Symlinking /home/kento/robot03/devel/lib/pkgconfig/joy_control.pc
+Symlinking /home/kento/robot03/devel/lib/joy_control/controller

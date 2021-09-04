@@ -1,8 +1,0 @@
-prefix=/home/kento/robot03/install
-
-Name: robot03
-Description: Description of robot03
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

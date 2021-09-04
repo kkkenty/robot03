@@ -1,0 +1,1 @@
+/home/kento/robot03/devel/.private/msgs/lib/pkgconfig/msgs.pc
