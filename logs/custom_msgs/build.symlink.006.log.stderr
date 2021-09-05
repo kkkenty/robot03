@@ -1,0 +1,18 @@
+Could not clean linked files.
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/catkin_tools/execution/stages.py", line 174, in function_proxy
+    return function(logger, event_queue, *args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/catkin_tools/jobs/catkin.py", line 330, in link_devel_products
+    clean_linked_files(logger, event_queue, metadata_path, files_that_collide, files_to_clean, dry_run=False)
+  File "/usr/lib/python2.7/dist-packages/catkin_tools/jobs/catkin.py", line 103, in clean_linked_files
+    dest_collisions = dict([(path, int(count)) for path, count in collisions_reader])
+ValueError: invalid literal for int() with base 10: 'HEAD'
+
+Stage `symlink` failed with arguments:
+  package: {'buildtool_export_depends': [], 'test_depends': [], 'exec_depends': [Dependency(name='message_runtime', evaluated_condition=True), Dependency(name='roscpp', evaluated_condition=True), Dependency(name='rospy', evaluated_condition=True), Dependency(name='std_msgs', evaluated_condition=True)], 'build_depends': [Dependency(name='message_generation', evaluated_condition=True), Dependency(name='roscpp', evaluated_condition=True), Dependency(name='rospy', evaluated_condition=True), Dependency(name='std_msgs', evaluated_condition=True)], 'licenses': ['TODO'], 'group_depends': [], 'doc_depends': [], 'filename': '/home/robot03/robot03/src/custom_msgs/package.xml', 'version': '0.0.0', 'package_format': 2, 'exports': [], 'description': u'The custom_msgs package', 'build_export_depends': [Dependency(name='roscpp', evaluated_condition=True), Dependency(name='rospy', evaluated_condition=True), Dependency(name='std_msgs', evaluated_condition=True)], 'maintainers': [<catkin_pkg.package.Person object at 0x75fa55b0>], 'member_of_groups': [], 'authors': [], 'conflicts': [], 'buildtool_depends': [Dependency(name='catkin', evaluated_condition=True)], 'version_compatibility': None, 'replaces': [], 'name': 'custom_msgs', 'urls': []}
+  metadata_path: /home/robot03/robot03/.catkin_tools/profiles/default
+  devel_manifest_path: /home/robot03/robot03/.catkin_tools/profiles/default/packages/custom_msgs
+  prebuild: False
+  package_path: custom_msgs
+  dest_devel_path: /home/robot03/robot03/devel
+  source_devel_path: /home/robot03/robot03/devel/.private/custom_msgs
