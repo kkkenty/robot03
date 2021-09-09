@@ -1,0 +1,16 @@
+<launch>
+  <node name="joystick" pkg="joy" type="joy_node">
+    <param name="dev" value="/dev/input/js2"/>
+  </node>
+
+  <node name="controller" pkg="joy_control" type="controller">
+	<param name="MAX_L" value="200"/>
+	<param name="MAX_R" value="200"/>
+  </node>
+
+  <node pkg="rosserial_python" type="serial_node.py" name="arduino">
+	<param name="port" value="/dev/ttyACM0"/>
+	<param name="baud" value="57600"/>
+  </node>
+
+</launch>

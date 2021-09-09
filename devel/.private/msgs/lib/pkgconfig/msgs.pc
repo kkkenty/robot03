@@ -1,0 +1,8 @@
+prefix=/home/kento/robot03/devel/.private/msgs
+
+Name: msgs
+Description: Description of msgs
+Version: 0.0.0
+Cflags: -I/home/kento/robot03/devel/.private/msgs/include
+Libs: -L${prefix}/lib 
+Requires: roscpp rospy std_msgs message_runtime
