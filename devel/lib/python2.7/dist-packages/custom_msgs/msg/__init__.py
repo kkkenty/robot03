@@ -1,1 +1,0 @@
-/home/robot03/robot03/devel/.private/custom_msgs/lib/python2.7/dist-packages/custom_msgs/msg/__init__.py

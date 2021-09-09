@@ -1,8 +1,0 @@
-prefix=/home/kento/robot03/devel/.private/joy_control
-
-Name: joy_control
-Description: Description of joy_control
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

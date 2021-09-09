@@ -1,1 +1,0 @@
-/home/kento/robot03/devel/.private/joy_control/share/joy_control/cmake/joy_controlConfig.cmake

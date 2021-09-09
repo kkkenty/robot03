@@ -1,1 +1,0 @@
-/home/kento/robot03/devel/.private/msgs/share/common-lisp/ros/msgs/msg/Motor.lisp
