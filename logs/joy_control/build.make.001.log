@@ -1,4 +1,0 @@
-[35m[1mScanning dependencies of target controller[0m
-[ 50%] [32mBuilding CXX object CMakeFiles/controller.dir/src/controller.cpp.o[0m
-[100%] [32m[1mLinking CXX executable /home/kento/robot03/devel/.private/joy_control/lib/joy_control/controller[0m
-[100%] Built target controller
