@@ -2,40 +2,33 @@
 //------------------------------------------------
 //  グローバル変数定義
 //------------------------------------------------
-const float LIMIT = 0.15, kp = 25.0, ki = 2.0, kd = 0.1; 
-const float PERIOD = 10.0; // ms -> 1000/PERIOD[Hz]
-
-// timeの更新が入るため，配列にしてそれぞれのエンコーダ分用意する
-unsigned long time_pre[NUM] = {0}, time_now[NUM] = {0};
-float SPEED_NOW[NUM] = {0.0}, SPEED_GOAL[NUM] = {0.0}, SPEED_ERROR[NUM] = {0.0};
-
+float SPEED_NOW[NUM] = {0}; // publishに使用
 // 割り込み処理(class宣言外)に使われるため，global変数
 volatile long value[NUM] = {0}; // エンコーダの値(割り込みで変化)
 volatile int nowSig_A[NUM] = {0}, nowSig_B[NUM] = {0}, oldSig_A[NUM] = {0}, oldSig_B[NUM] = {0}; // A,B相の信号
 volatile int nowState[NUM] = {0}, oldState[NUM] = {0}; // A,B相の状態 
-
 //------------------------------------------------
 //  概　要：encoderのコンストラクタ
 //  引  数：A相ピン番号，B相ピン番号
 //------------------------------------------------
-encoder::encoder(int A, int B){
+encoder::encoder(int PA, int PB){
+  A = PA; B = PB;
   pinMode(A, INPUT);
   pinMode(B, INPUT);
+  time_pre = millis();
 }
 //------------------------------------------------
 //  概　要：現在の速度の取得
 //  引  数：0/1(左/右)
 //------------------------------------------------
 void encoder::getSPEED(int i){
-  time_now[i] = millis();
+  time_now = millis();
   value_now = value[i];
-  //Serial.println(value_now[i]);
-  static float dt = 0.0;
-  if((dt = time_now[i] - time_pre[i]) > 50){
+  //Serial.println(value_now);
+  if((dt = time_now - time_pre) > 50){ // 20Hz
     SPEED_NOW[i] = (float)(value_now - value_pre) / dt;
-    SPEED_ERROR[i] = SPEED_GOAL[i] - SPEED_NOW[i]; // P項 or 偏差
     //Serial.println(SPEED_NOW[i]);
-    time_pre[i] = time_now[i];
+    time_pre = time_now;
     value_pre = value_now;
   }
 }
@@ -43,42 +36,16 @@ void encoder::getSPEED(int i){
 //  概　要：motorのコンストラクタ
 //  引  数：PWMピン番号，DIRピン番号
 //------------------------------------------------
-motor::motor(int POW, int DIR){
+motor::motor(int P1, int P2){
+  POW = P1; DIR = P2;
   pinMode(POW, OUTPUT);
   pinMode(DIR, OUTPUT);
 }
 //------------------------------------------------
-//  概　要：PID制御してPWM計算
-//  引  数：0/1(左/右)
-//------------------------------------------------
-void motor::PID(int i){
-  SPEED_SUM += (SPEED_ERROR[i] + SPEED_ERROR_PRE) / 2.0; // I項
-  SPEED_ACC = (float)(SPEED_NOW[i] - SPEED_PRE) / PERIOD * 1000.0; // D項
-  //Serial.println(SPEED_ACC);
-  PWM = kp * SPEED_ERROR[i] + ki * SPEED_SUM - kd * SPEED_ACC;
-  SPEED_ERROR_PRE = SPEED_ERROR[i];
-  SPEED_PRE = SPEED_NOW[i];
-}
-//------------------------------------------------
-//  概　要：台形制御してPWM計算
-//  引  数：0/1(左/右)
-//------------------------------------------------
-void motor::daikei(int i){
-  if(SPEED_ERROR[i] > LIMIT){
-    PWM += ACC;
-  }
-  else if(SPEED_ERROR[i] < -LIMIT){
-    PWM -= ACC;
-  }
-  else{ // -LIMIT <= SPEED_ERROR[i] <= LIMIT
-  }
-}
-//------------------------------------------------
 //  概　要：モータに出力を送る
-//  引  数：PWMピン番号，DIRピン番号
 //------------------------------------------------
-void motor::Write(int POW, int DIR){
-  if(PWM > 255 ) PWM = 255;
+void motor::Write(){
+  if(PWM > 255 ) PWM = 255; // 上限・下限の設定
   else if(PWM < -255) PWM = -255;
   
   if(PWM >= 0){
@@ -91,7 +58,6 @@ void motor::Write(int POW, int DIR){
   }
   //Serial.println(PWM);
 }
-
 //------------------------------------------------
 //  概　要：左エンコーダのカウンタ（割り込み）
 //------------------------------------------------

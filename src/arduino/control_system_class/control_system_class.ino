@@ -41,8 +41,8 @@ void loop() {
   enc_right.getSPEED(1);
 
   // 制御でPWM計算
-  mot_left.PID(0);
-  mot_right.PID(1);
+  mot_left.daikei(0);
+  mot_right.daikei(1);
 
   // PWMを0にする
   protect_time_now = millis();
