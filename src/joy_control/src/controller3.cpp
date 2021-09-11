@@ -2,15 +2,16 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
 #include <msgs/Motor.h>
+#include <msgs/PID.h>
 //-------------------
 // global変数
 //-------------------
 msgs::Motor control;
-const int FRIQUENCE = 100;
+msgs::PID param;
 const float LIMIT = 0.15, ACC = 1;
 float kp = 25.0, ki = 2.0, kd = 0.1; 
 float v = 0.0, w = 0.0, kv = 5.0, kw = 10.0, d = 0.2;
-int state = 0;
+int state = 0, FRIQUENCE = 20;
 //------------------
 // クラスの定義
 //------------------
@@ -28,7 +29,10 @@ float feedback::PID(){
   SPEED_SUM += (SPEED_ERROR + SPEED_ERROR_PRE) / 2.0; // I項
   SPEED_ACC = (float)(SPEED_NOW - SPEED_PRE) * (float)FRIQUENCE; // D項
   //ROS_INFO("lf", SPEED_ACC);
-  PWM = kp * SPEED_ERROR + ki * SPEED_SUM - kd * SPEED_ACC;
+  param.p = kp * SPEED_ERROR;
+  param.i = ki * ki * SPEED_SUM;
+  param.d = kd * SPEED_ACC;
+  PWM = param.p + param.i - param.d;
   SPEED_ERROR_PRE = SPEED_ERROR;
   SPEED_PRE = SPEED_NOW;
   return PWM;
@@ -88,9 +92,11 @@ int main(int argc, char **argv)
   pnh.getParam("kp", kp);
   pnh.getParam("ki", ki);
   pnh.getParam("kd", kd);
+  pnh.getParam("FRIQUENCE", FRIQUENCE);
   ros::Subscriber joy_sub = nh.subscribe("joy", 10, joyCb);
   ros::Subscriber ard_sub = nh.subscribe("speed", 1, ardCb);	
-  ros::Publisher pub = nh.advertise<msgs::Motor>("control", 1);
+  ros::Publisher ard_pub = nh.advertise<msgs::Motor>("control", 1);
+  ros::Publisher scr_pub = nh.advertise<msgs::PID>("param", 1);
   ros::Rate loop_rate(FRIQUENCE);
   
   while (ros::ok())
@@ -101,7 +107,8 @@ int main(int argc, char **argv)
       control.left  = 0.0;
       control.right = 0.0;
     }
-    pub.publish(control);
+    ard_pub.publish(control);
+    scr_pub.publish(param);
     ros::spinOnce();
     loop_rate.sleep();
   }
