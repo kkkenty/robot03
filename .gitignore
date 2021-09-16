@@ -2,3 +2,5 @@
 /devel/
 /logs/
 /.catkin_tools/
+/openslam_gmapping/
+/slam_gmapping/
