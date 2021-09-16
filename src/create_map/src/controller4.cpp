@@ -9,10 +9,9 @@
 //-------------------
 msgs::Motor control;
 msgs::PID param;
-const float LIMIT = 0.15, ACC = 1;
-float kp = 25.0, ki = 2.0, kd = 0.1; 
-double v_goal = 0.0, w_goal = 0.0, kv = 0.458, kw = 0.739, d = 0.31;
-int state = 0, FRIQUENCE = 20;
+float kp = 25.0, ki = 2.0, kd = 0.1, LIMIT = 0.15, ACC = 1.0; 
+double v_goal = 0.0, w_goal = 0.0, kv = 0.458, kw = 1.478, d = 0.155;
+int state = 0, mode = 0, FRIQUENCE = 100;
 //------------------
 // クラスの定義
 //------------------
@@ -63,21 +62,30 @@ void joyCb(const sensor_msgs::Joy &joy_msg)
   LEFT.SPEED_GOAL  = v_goal - (w_goal * d);
   RIGHT.SPEED_GOAL = v_goal + (w_goal * d);
   if(joy_msg.buttons[0]){
-    state++;
-    if(state % 2 == 1){
+    if(state == 0){
       ROS_INFO("STOPPING!");
+      state = 1;
     }
-    else if(state % 2 == 0){
+    else if(state == 1){
       ROS_INFO("RESTARTING!");
+      state = 0;
     }
   }
-  //ROS_INFO("LEFT.SPEED_GOAL:%lf", (double)PWM.L);
-  //ROS_INFO("RIGHT.SPEED_GOAL:%lf", (double)PWM.R);
+  if(joy_msg.buttons[10]){
+    if(mode == 1){
+      mode = 0; // set PID()
+    }
+  }
+  if(joy_msg.buttons[11]){
+    if(mode == 0){
+      mode = 1; // set daikei()
+    }
+  }
 }
-void ardCb(const msgs::Motor &sensor)
+void FBCb(const msgs::Motor &vel)
 {
-  LEFT.SPEED_NOW  = sensor.left;
-  RIGHT.SPEED_NOW = sensor.right;
+  LEFT.SPEED_NOW  = vel.left;
+  RIGHT.SPEED_NOW = vel.right;
 }
 //---------------------
 // main関数
@@ -93,18 +101,25 @@ int main(int argc, char **argv)
   pnh.getParam("kp", kp);
   pnh.getParam("ki", ki);
   pnh.getParam("kd", kd);
+  pnh.getParam("LIMIT", LIMIT);
+  pnh.getParam("ACC", ACC);
   pnh.getParam("FRIQUENCE", FRIQUENCE);
   ros::Subscriber joy_sub = nh.subscribe("joy", 10, joyCb);
-  ros::Subscriber ard_sub = nh.subscribe("speed", 1, ardCb);	
+  ros::Subscriber FB_sub = nh.subscribe("vel_FB", 1, FBCb);	
   ros::Publisher ard_pub = nh.advertise<msgs::Motor>("cmd_pwm", 1);
   ros::Publisher scr_pub = nh.advertise<msgs::PID>("param", 1);
   ros::Rate loop_rate(FRIQUENCE);
   
   while (ros::ok())
   {
-    control.left  = LEFT.PID();
-    control.right = RIGHT.PID();
-    if(state % 2 == 1){
+    if(mode == 0){
+      control.left  = LEFT.PID();
+      control.right = RIGHT.PID();
+    }else if(mode == 1){
+      control.left  = LEFT.daikei();
+      control.right = RIGHT.daikei();
+    }
+    if(state){
       control.left  = 0.0;
       control.right = 0.0;
     }

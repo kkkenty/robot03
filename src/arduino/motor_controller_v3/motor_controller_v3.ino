@@ -6,7 +6,7 @@
 //  グローバル変数定義
 //------------------------------------------------
 const float PERIOD = 10.0; // ms -> 1000/PERIOD[Hz]
-msgs::Motor SPEED;
+msgs::Motor SPEED, POSITION;
 
 encoder enc_left(PIN_A_LEFT, PIN_B_LEFT);
 encoder enc_right(PIN_A_RIGHT, PIN_B_RIGHT);
@@ -14,18 +14,15 @@ encoder enc_right(PIN_A_RIGHT, PIN_B_RIGHT);
   motor mot_right(PIN_PWM_RIGHT, PIN_DIR_RIGHT);
 
 ros::NodeHandle nh;
-ros::Publisher pub("speed", &SPEED);
+ros::Publisher vel_pub("vel_sensor", &SPEED);
+ros::Publisher pst_pub("pst_sensor", &POSITION);
 
 void controlCb(const msgs::Motor& get_msg){
   mot_left.PWM = (int)get_msg.left;
   mot_right.PWM = (int)get_msg.right;
 }
-void directCb(const msgs::Motor& get_msg){
-  mot_left.PWM = (int)get_msg.left;
-  mot_right.PWM = (int)get_msg.right;
-}
 
-ros::Subscriber<msgs::Motor> sub("control", &controlCb);
+ros::Subscriber<msgs::Motor> sub("cmd_pwm", &controlCb);
 
 void setup() {
   Serial.begin(57600);
@@ -34,7 +31,8 @@ void setup() {
   attachInterrupt(0, counter1, CHANGE);
   attachInterrupt(1, counter1, CHANGE);
   nh.initNode();
-  nh.advertise(pub);
+  nh.advertise(vel_pub);
+  nh.advertise(pst_pub);
   nh.subscribe(sub);
 }
 
@@ -44,11 +42,14 @@ void loop() {
   enc_right.getSPEED(1);
   SPEED.left = SPEED_NOW[0];
   SPEED.right = SPEED_NOW[1];
+  POSITION.left = value_now[0];
+  POSITION.right = value_now[1];
   // 速度の出力
   mot_left.Write();
   mot_right.Write();
   // ROS処理
-  pub.publish(&SPEED);
+  vel_pub.publish(&SPEED);
+  pst_pub.publish(&POSITION);
   nh.spinOnce();
   delay(PERIOD);
 }

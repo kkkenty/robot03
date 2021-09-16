@@ -18,6 +18,7 @@
 //  extern宣言
 //------------------------------------------------
 extern float SPEED_NOW[NUM]; // publishに使用
+extern long value_now[NUM];
 //------------------------------------------------
 //  クラス定義(Class definition)
 //------------------------------------------------
@@ -26,7 +27,7 @@ class encoder{
     int A, B;
     float dt = 0.0;
     unsigned long time_pre = 0, time_now = 0;
-    long value_pre = 0, value_now = 0;
+    long value_pre = 0;
   public:
     encoder(int PA, int PB);
     void getSPEED(int i); // 現在の速度の取得

@@ -3,6 +3,7 @@
 //  グローバル変数定義
 //------------------------------------------------
 float SPEED_NOW[NUM] = {0}; // publishに使用
+long value_now[NUM] = {0};
 // 割り込み処理(class宣言外)に使われるため，global変数
 volatile long value[NUM] = {0}; // エンコーダの値(割り込みで変化)
 volatile int nowSig_A[NUM] = {0}, nowSig_B[NUM] = {0}, oldSig_A[NUM] = {0}, oldSig_B[NUM] = {0}; // A,B相の信号
@@ -23,13 +24,13 @@ encoder::encoder(int PA, int PB){
 //------------------------------------------------
 void encoder::getSPEED(int i){
   time_now = millis();
-  value_now = value[i];
-  //Serial.println(value_now);
+  value_now[i] = value[i];
+  //Serial.println(value_now[i]);
   if((dt = time_now - time_pre) > 50){ // 20Hz
-    SPEED_NOW[i] = (float)(value_now - value_pre) / dt;
+    SPEED_NOW[i] = (float)(value_now[i] - value_pre) / dt;
     //Serial.println(SPEED_NOW[i]);
     time_pre = time_now;
-    value_pre = value_now;
+    value_pre = value_now[i];
   }
 }
 //------------------------------------------------
