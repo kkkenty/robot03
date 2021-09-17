@@ -1,9 +1,9 @@
 <launch>
-  <arg name="joystick" 		default="false"/>
-  <arg name="controller" 	default="false"/>
-  <arg name="arduino" 		default="false"/>
-  <arg name="urg" 		default="false"/>
-  <arg name="tf_publisher" 	default="false"/>
+  <arg name="joystick" 		default="true"/>
+  <arg name="controller" 	default="true"/>
+  <arg name="arduino" 		default="true"/>
+  <arg name="urg" 		default="true"/>
+  <arg name="tf_publisher" 	default="true"/>
   <arg name="gmapping"		default="true"/>
   <arg name="rviz"		default="true"/>
 
