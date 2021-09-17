@@ -1,8 +1,8 @@
 <launch>
   <arg name="joystick" 		default="true"/>
   <arg name="controller" 	default="true"/>
-  <arg name="arduino" 		default="true"/>
-  <arg name="urg" 		default="true"/>
+  <arg name="arduino" 		default="false"/>
+  <arg name="urg" 		default="false"/>
   <arg name="tf_publisher" 	default="true"/>
   <arg name="gmapping"		default="true"/>
 
