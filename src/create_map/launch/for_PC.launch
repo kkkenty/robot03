@@ -1,21 +1,22 @@
 <launch>
-  <arg name="joystick" 		default="true"/>
-  <arg name="controller" 	default="true"/>
+  <arg name="joystick" 		default="false"/>
+  <arg name="controller" 	default="false"/>
   <arg name="arduino" 		default="false"/>
   <arg name="urg" 		default="false"/>
-  <arg name="tf_publisher" 	default="true"/>
+  <arg name="tf_publisher" 	default="false"/>
   <arg name="gmapping"		default="true"/>
+  <arg name="rviz"		default="true"/>
 
   <group if="$(arg joystick)">
     <node name="joystick" pkg="joy" type="joy_node" required="true">
-      <param name="dev" value="/dev/input/js2"/>
+      <param name="dev" value="/dev/input/js0"/>
     </node>
   </group>
 
   <group if="$(arg controller)">
     <node name="controller" pkg="create_map" type="controller4" output="screen" required="true">
-      <param name="kv" value="0.458"/>
-      <param name="kw" value="1.478"/>
+      <param name="kv" value="0.2"/> <!-- value="0.458" -->
+      <param name="kw" value="0.75"/> <!-- value="1.478" -->
       <param name="d"  value="0.155"/>
       <param name="kp" value="130.0"/>
       <param name="ki" value="4.0"/>
@@ -35,14 +36,16 @@
   
   <group if="$(arg urg)">
     <node pkg="urg_node" name="urg_node" type="urg_node" required="true">
-      <param name="frame_id" value="base_link"/>
+      <param name="frame_id" value="base_laser"/>
       <param name="serial_port" value="/dev/serial/by-id/usb-Hokuyo_Data_Flex_for_USB_URG-Series_USB_Driver-if00"/>
     </node>
   </group>
   
   <group if="$(arg tf_publisher)">
-    <node pkg="create_map" name="tf_publisher" type="tf_publisher" required="true">
+    <!-- rosparam param="/use_sim_time">true</rosparam -->
+    <node pkg="create_map" name="tf_publisher" type="tf_publisher" output="screen" required="true">
       <param name="d"  value="0.155"/>
+      <param name="FRIQUENCE" value="100"/>
     </node>
   </group>
   
@@ -53,13 +56,25 @@
     <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
       <param name="base_frame" value="base_link"/>
       <param name="odom_frame" value="odom"/>
-      <!-- param name="maxUrage" value="4.0"/ -->
-      <!-- param name="maxRange" value="4.0"/ -->
-      <param name="srr" value="0.3"/>
-      <param name="srt" value="0.1"/>
-      <param name="str" value="0.1"/>
-      <param name="stt" value="0.3"/>
-      <param name="particles" value="100"/>
+      <param name="map_update_interval" value="5.0"/>
+      <param name="maxUrage" value="4.0"/>
+      <param name="maxRange" value="4.0"/>
+      <!-- param name="srr" value="0.3"/ -->
+      <!-- param name="srt" value="0.1"/ -->
+      <!-- param name="str" value="0.1"/ -->
+      <!-- param name="stt" value="0.3"/ -->
+      <param name="particles" value="60"/>
+      <param name="xmin" value="-1.0"/>
+      <param name="ymin" value="-1.0"/>
+      <param name="xmax" value="0.0"/>
+      <param name="ymax" value="0.0"/>
+      <param name="delta" value="0.025"/>
     </node>     
   </group>
+
+  <group if="$(arg rviz)"> 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find create_map)/rviz/tf_laser_map.rviz"/>
+  </group>
+
 </launch>
