@@ -45,7 +45,6 @@ class tf_odom
     ros::Time ros_pre = ros::Time::now();
   public:
     //nav_msgs::Odometry odom;
-    
     void get_odom();
     void send_odom(); // odom情報を計算
 };
@@ -62,15 +61,6 @@ void tf_odom::send_odom(){
   ros::Time ros_now = ros::Time::now();
   dt = ros_now.toSec() - ros_pre.toSec();
   //ROS_INFO("ROS::Time: %lf", dt);
-  
-  //static double fg = 0;
-  //fg = (double)ros_now - (double)ros_pre;
-  
-  /*
-  x = (pst.left + pst.right) / 2.0 * cos(th);
-  y = (pst.left + pst.right) / 2.0 * sin(th);  
-  th = (pst.right - pst.left) / 2.0 / d;
-  */
   
   /*
   th += (pst.right - pst.left) / 2.0 / d;
