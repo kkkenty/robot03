@@ -1,3 +1,4 @@
+// 目標速度を取得し、Arduino内で速度制御する
 #include "motor_control.h"
 #include <ros.h>
 #include "msgs/Motor.h"

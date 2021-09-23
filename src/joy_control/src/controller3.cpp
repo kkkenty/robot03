@@ -1,4 +1,6 @@
-// joystickから目標速度、Arduinoから現在速度をsubし、PWM値をpubする
+// joystickから偽の目標速度を受け取り、Arduinoから現在速度を受け取りながらノード内で速度制御する
+// 速度制御した結果のPWM値を配信する
+// P,I,D項の値も配信する
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
 #include <msgs/Motor.h>
@@ -94,8 +96,8 @@ int main(int argc, char **argv)
   pnh.getParam("kd", kd);
   pnh.getParam("FRIQUENCE", FRIQUENCE);
   ros::Subscriber joy_sub = nh.subscribe("joy", 10, joyCb);
-  ros::Subscriber ard_sub = nh.subscribe("speed", 1, ardCb);	
-  ros::Publisher ard_pub = nh.advertise<msgs::Motor>("control", 1);
+  ros::Subscriber ard_sub = nh.subscribe("encoder", 1, ardCb);	
+  ros::Publisher ard_pub = nh.advertise<msgs::Motor>("power", 1);
   ros::Publisher scr_pub = nh.advertise<msgs::PID>("param", 1);
   ros::Rate loop_rate(FRIQUENCE);
   

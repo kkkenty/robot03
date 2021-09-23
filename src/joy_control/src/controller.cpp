@@ -1,9 +1,12 @@
+// joystickを使って、目標PWM値を配信する
+// 左右のstickでそれぞれのモータを動かす
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
 #include <msgs/Motor.h>
 
 msgs::Motor PWM;
 float MAX_L = 255.0, MAX_R = 255.0;
+int FRIQUENCE = 100;
 
 void joy_callback(const sensor_msgs::Joy &joy_msg)
 {
@@ -23,9 +26,10 @@ int main(int argc, char **argv)
   ros::NodeHandle pnh("~");
   pnh.getParam("MAX_L", MAX_L);
   pnh.getParam("MAX_R", MAX_R);
+  pnh.getParam("FRIQUENCE", FRIQUENCE);
   ros::Subscriber sub = nh.subscribe("joy", 10, joy_callback);
   ros::Publisher pub = nh.advertise<msgs::Motor>("power", 1);
-  ros::Rate loop_rate(100);
+  ros::Rate loop_rate(FRIQUENCE);
 
   while (ros::ok())
   {

@@ -1,0 +1,27 @@
+<launch>
+  <arg name="joystick" 		default="true"/>
+  <arg name="controller" 	default="true"/>
+  <arg name="arduino" 		default="true"/>
+
+  <group if="$(arg joystick)">
+    <node name="joystick" pkg="joy" type="joy_node" required="true">
+      <param name="dev" value="/dev/input/js2"/>
+    </node>
+  </group>
+
+  <group if="$(arg controller)">
+    <node name="controller" pkg="joy_control" type="controller" output="screen" required="true">
+      <param name="MAX_L" value="200"/>
+      <param name="MAX_R" value="200"/>
+      <param name="FRIQUENCE" value="100"/>
+    </node>
+  </group>
+
+  <!-- this is required with "motor_controller_v2" -->
+  <group if="$(arg arduino)">
+    <node pkg="rosserial_python" type="serial_node.py" name="arduino" required="true">
+      <param name="port" value="/dev/ttyACM0"/>
+      <param name="baud" value="57600"/>
+    </node>
+  </group>
+</launch>

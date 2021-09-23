@@ -1,4 +1,5 @@
-// Arduinoからエンコーダ情報を得て、odom情報をtf,SLAMに配信
+// Arduinoからエンコーダ情報を得て、計算したオドメータ情報をtfに配信
+// さらに速度を配信する
 #include <ros/ros.h>
 #include <msgs/Motor.h>
 #include <tf/transform_broadcaster.h>
@@ -29,10 +30,6 @@ geometry_msgs::Pose setPose(float x, float y, float yaw){
 void getvel(msgs::Motor fake_vel){ // 正確なv,wを取得
   vel.left = 0.12 * pi * 1000 / 3292 * fake_vel.left;
   vel.right = 0.12 * pi * 1000 / 3292 * fake_vel.right;
-}
-void getpst(msgs::Motor fake_pst){ // 正確なdv,dwを取得
-  pst.left = 0.12 * pi / 3292 * fake_pst.left;
-  pst.right = 0.12 * pi / 3292 * fake_pst.right;
 }
 //------------------
 // クラスの定義
@@ -125,8 +122,7 @@ int main(int argc, char **argv)
   ros::NodeHandle pnh("~");
   pnh.getParam("d", d);
   pnh.getParam("FRIQUENCE", FRIQUENCE);
-  ros::Subscriber vel_sub = nh.subscribe("vel_sensor", 1, getvel);
-  ros::Subscriber pst_sub = nh.subscribe("pst_sensor", 1, getpst);
+  ros::Subscriber vel_sub = nh.subscribe("encoder", 1, getvel);
   //ros::Publisher odm_pub = nh.advertise<nav_msgs::Odometry>("odom", 1);
   ros::Publisher ctr_pub = nh.advertise<msgs::Motor>("vel_FB", 1);
   ros::Rate loop_rate(FRIQUENCE);
