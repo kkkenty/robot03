@@ -3,7 +3,7 @@
   <arg name="controller" 	default="false"/>
   <arg name="arduino" 		default="false"/>
   <arg name="urg" 		default="false"/>
-  <arg name="tf_publisher" 	default="false"/>
+  <arg name="tf_publisher" 	default="true"/>
   <arg name="gmapping"		default="true"/>
   <arg name="rviz"		default="true"/>
 
@@ -38,6 +38,8 @@
     <node pkg="urg_node" name="urg_node" type="urg_node" required="true">
       <param name="frame_id" value="base_laser"/>
       <param name="serial_port" value="/dev/serial/by-id/usb-Hokuyo_Data_Flex_for_USB_URG-Series_USB_Driver-if00"/>
+      <param name="angle_max" value="1.0"/>
+      <param name="angle_min" value="-1.4"/>
     </node>
   </group>
   
@@ -45,7 +47,7 @@
     <!-- rosparam param="/use_sim_time">true</rosparam -->
     <node pkg="create_map" name="tf_publisher" type="tf_publisher" output="screen" required="true">
       <param name="d"  value="0.155"/>
-      <param name="FRIQUENCE" value="100"/>
+      <param name="FRIQUENCE" value="20"/>
     </node>
   </group>
   
@@ -66,8 +68,8 @@
       <param name="particles" value="60"/>
       <param name="xmin" value="-1.0"/>
       <param name="ymin" value="-1.0"/>
-      <param name="xmax" value="0.0"/>
-      <param name="ymax" value="0.0"/>
+      <param name="xmax" value="1.0"/>
+      <param name="ymax" value="1.0"/>
       <param name="delta" value="0.025"/>
     </node>     
   </group>

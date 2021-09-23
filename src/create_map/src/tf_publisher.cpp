@@ -94,7 +94,7 @@ void tf_odom::send_odom(){
   tf_base.setOrigin(tf::Vector3(x, y, 0.0));
   q_base.setRPY(0, 0, th);
   tf_base.setRotation(q_base);
-  tf_laser.setOrigin(tf::Vector3(0.0, -0.1, 0.13));
+  tf_laser.setOrigin(tf::Vector3(-0.07, -0.07, 0.085));
   q_laser.setRPY(0, 0, pi);
   tf_laser.setRotation(q_laser);
   
