@@ -1,9 +1,9 @@
 <launch>
-  <arg name="joystick" 		default="true"/>
-  <arg name="controller" 	default="true"/>
-  <arg name="arduino" 		default="true"/>
+  <arg name="joystick" 		default="false"/>
+  <arg name="controller" 	default="false"/>
+  <arg name="arduino" 		default="false"/>
   <arg name="urg" 		default="true"/>
-  <arg name="tf_publisher" 	default="true"/>
+  <arg name="tf_publisher" 	default="false"/>
   <arg name="gmapping"		default="false"/>
   <arg name="rviz"		default="false"/>
 
@@ -38,6 +38,8 @@
     <node pkg="urg_node" name="urg_node" type="urg_node" required="true">
       <param name="frame_id" value="base_laser"/>
       <param name="serial_port" value="/dev/serial/by-id/usb-Hokuyo_Data_Flex_for_USB_URG-Series_USB_Driver-if00"/>
+      <param name="angle_max" value="1.0"/>
+      <param name="angle_min" value="-1.4"/>
     </node>
   </group>
   
@@ -66,8 +68,8 @@
       <param name="particles" value="60"/>
       <param name="xmin" value="-1.0"/>
       <param name="ymin" value="-1.0"/>
-      <param name="xmax" value="0.0"/>
-      <param name="ymax" value="0.0"/>
+      <param name="xmax" value="1.0"/>
+      <param name="ymax" value="1.0"/>
       <param name="delta" value="0.025"/>
     </node>     
   </group>
