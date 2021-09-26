@@ -13,6 +13,7 @@
   <arg name="move_base"		default="true"/>
   <arg name="rviz"		default="false"/>
   <arg name="rviz_sample"	default="true"/>
+  <arg name="make_goal"		default="false"/>
 
   <group if="$(arg joystick)">
     <node name="joystick" pkg="joy" type="joy_node" required="true">
@@ -74,6 +75,10 @@
   <group if="$(arg rviz)"> 
     <node pkg="rviz" type="rviz" name="rviz" required="true"
           args="-d $(find robot03_navigation)/rviz/debug_nav.rviz"/>
+  </group>
+
+  <group if="$(arg make_goal)">
+    <node pkg="robot03_navigation" type="make_goal" name="make_goal" required="true"/>
   </group>
 
   <group if="$(arg rviz_sample)">
