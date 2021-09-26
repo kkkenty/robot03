@@ -8,12 +8,12 @@
   <arg name="arduino" 		default="true"/>
   <arg name="urg"		default="true"/>
   <arg name="odometry"		default="true"/>
-  <arg name="map_server"	default="false"/>
-  <arg name="amcl"		default="false"/>
-  <arg name="move_base"		default="false"/>
+  <arg name="map_server"	default="true"/>
+  <arg name="amcl"		default="true"/>
+  <arg name="move_base"		default="true"/>
   <arg name="rviz"		default="false"/>
-  <arg name="rviz_sample"	default="false"/>
-  <arg name="make_goal"		default="false"/>
+  <arg name="rviz_sample"	default="true"/>
+  <arg name="make_goal"		default="true"/>
 
   <group if="$(arg joystick)">
     <node name="joystick" pkg="joy" type="joy_node" required="true">
