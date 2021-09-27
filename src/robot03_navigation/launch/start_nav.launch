@@ -12,12 +12,12 @@
   <arg name="amcl"		default="true"/>
   <arg name="move_base"		default="true"/>
   <arg name="rviz"		default="false"/>
-  <arg name="rviz_sample"	default="true"/>
+  <arg name="rviz_sample"	default="false"/>
   <arg name="make_goal"		default="false"/>
 
   <group if="$(arg joystick)">
     <node name="joystick" pkg="joy" type="joy_node" required="true">
-      <param name="dev" value="/dev/input/js2"/>
+      <param name="dev" value="/dev/input/js0"/>
     </node>
   </group>
 
