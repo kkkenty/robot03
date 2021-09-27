@@ -105,12 +105,10 @@ int main(int argc, char* argv[])
   // 行き先を追加
   int i;
   for(i=0;i<3;i++){
-    robot_test.addGoal(1.0, 0.0, -0.785);
-    robot_test.addGoal(1.2, -0.6, -1.57);
-    robot_test.addGoal(1.0, -1.2, -2.355);
-    robot_test.addGoal(0.0, -1.2, -3.925);
-    robot_test.addGoal(-0.5, -0.6, -4.71);
-    robot_test.addGoal(0.0, 0.0, -5.495);
+    robot_test.addGoal(1.0, 0.0, 0.0);
+    robot_test.addGoal(1.0, -1.2, -1.57);
+    robot_test.addGoal(-0.5, -1.2, 3.14);
+    robot_test.addGoal(-0.5, 0.0, 1.57);
   }
   robot_test.mainloop();
 }

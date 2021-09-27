@@ -29,7 +29,7 @@ float feedback::PID(){
   SPEED_ERROR = SPEED_GOAL - SPEED_NOW; // P項 or 偏差
   SPEED_SUM += (SPEED_ERROR + SPEED_ERROR_PRE) / 2.0; // I項
   SPEED_ACC = (float)(SPEED_NOW - SPEED_PRE) * (float)FRIQUENCE; // D項
-  //ROS_INFO("lf", SPEED_ACC);
+  //ROS_INFO("%lf", SPEED_ACC);
   param.p = kp * SPEED_ERROR;
   param.i = ki * ki * SPEED_SUM;
   param.d = kd * SPEED_ACC;

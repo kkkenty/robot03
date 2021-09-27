@@ -11,7 +11,7 @@
 int FRIQUENCE = 100;
 const double pi = 3.14159265;
 double d = 0.155;
-msgs::Motor vel;
+msgs::Motor vel, acc;
 nav_msgs::Odometry odom;
 //------------------
 // 関数、Cb関数の定義
@@ -37,7 +37,7 @@ void getvel(msgs::Motor fake_vel){ // 正確なv,wを取得
 class tf_odom
 {
   private:
-    double x = 0.0, y = 0.0, th = 0.0, dt = 0.0, V = 0.0, W = 0.0;
+    double x = 0.0, y = 0.0, th = 0.0, dt = 0.0, V = 0.0, W = 0.0, preV = 0.0, preW = 0.0;
     tf::TransformBroadcaster br;
     tf::Transform tf_base, tf_laser;
     tf::Quaternion q_base, q_laser;
@@ -56,6 +56,8 @@ void tf_odom::get_odom()
   x += V * dt * cos(th);
   y += V * dt * sin(th);
   th += W * dt;
+  acc.left = (V - preV) / dt;
+  acc.right = (W - preW) / dt;
   //ROS_INFO("x:%lf, y:%lf, th:%lf", x, y, th);
   
   // tf message
@@ -79,6 +81,8 @@ void tf_odom::get_odom()
   odom.twist.twist.angular.z = W;
   
   ros_pre = ros_now;
+  preV = V;
+  preW = W;
 }
 //---------------------
 // main関数
@@ -91,10 +95,11 @@ int main(int argc, char **argv)
   pnh.getParam("d", d);
   pnh.getParam("FRIQUENCE", FRIQUENCE);
   tf_odom robot;
-  vel.left = 0.0; vel.right = 0.0; // inisialize
+  vel.left = 0.0; vel.right = 0.0; acc.left = 0.0; acc.right = 0.0;// inisialize
   ros::Subscriber vel_sub = nh.subscribe("encoder", 1, getvel);
   ros::Publisher odm_pub = nh.advertise<nav_msgs::Odometry>("odom", 50);
   ros::Publisher vel_pub = nh.advertise<msgs::Motor>("vel_FB", 1);
+  ros::Publisher acc_pub = nh.advertise<msgs::Motor>("acc", 1);
   ros::Rate loop_rate(FRIQUENCE);
 
   while (ros::ok())
@@ -102,6 +107,7 @@ int main(int argc, char **argv)
     robot.get_odom();
     odm_pub.publish(odom);
     vel_pub.publish(vel);
+    acc_pub.publish(acc);
 
     ros::spinOnce();
     loop_rate.sleep();

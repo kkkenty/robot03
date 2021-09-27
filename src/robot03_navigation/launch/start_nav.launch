@@ -13,18 +13,18 @@
   <arg name="move_base"		default="true"/>
   <arg name="rviz"		default="false"/>
   <arg name="rviz_sample"	default="true"/>
-  <arg name="make_goal"		default="true"/>
+  <arg name="make_goal"		default="false"/>
 
   <group if="$(arg joystick)">
     <node name="joystick" pkg="joy" type="joy_node" required="true">
-      <param name="dev" value="/dev/input/js0"/>
+      <param name="dev" value="/dev/input/js2"/>
     </node>
   </group>
 
   <group if="$(arg controller)">
     <node name="controller" pkg="robot03_navigation" type="controller5" output="screen" required="true">
-      <param name="kv" value="0.46"/> <!-- value="0.458" -->
-      <param name="kw" value="1.48"/> <!-- value="1.478" -->
+      <param name="kv" value="0.45"/> <!-- value="0.45" -->
+      <param name="kw" value="1.50"/> <!-- value="1.50" -->
       <param name="d"  value="0.16"/>
       <param name="kp" value="130.0"/>
       <param name="ki" value="4.0"/>
