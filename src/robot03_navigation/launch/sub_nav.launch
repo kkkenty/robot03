@@ -6,12 +6,12 @@
   <arg name="joystick" 		default="true"/>
   <arg name="controller" 	default="true"/>
   <arg name="arduino" 		default="true"/>
-  <arg name="urg"		    default="true"/>
+  <arg name="urg"		default="true"/>
   <arg name="odometry"		default="true"/>
   <arg name="map_server"	default="true"/>
-  <arg name="amcl"		    default="true"/>
+  <arg name="amcl"		default="true"/>
   <arg name="move_base"		default="false"/>
-  <arg name="rviz"		    default="false"/>
+  <arg name="rviz"		default="false"/>
   <arg name="rviz_sample"	default="true"/>
   <arg name="make_goal"		default="false"/>
   <arg name="pure_pursuit"	default="true"/>
@@ -92,7 +92,7 @@
       <param name="FRIQUENCE" value="20"/>
       <param name="den" value="20"/>
       <param name="ahed" value="5"/>
-      <param name="vel" value="0.3"/>
+      <param name="vel" value="0.2"/>
     </node>
   </group>
 
