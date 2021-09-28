@@ -6,12 +6,12 @@
   <arg name="joystick" 		default="true"/>
   <arg name="controller" 	default="true"/>
   <arg name="arduino" 		default="true"/>
-  <arg name="urg"		default="true"/>
+  <arg name="urg"		    default="true"/>
   <arg name="odometry"		default="true"/>
   <arg name="map_server"	default="true"/>
-  <arg name="amcl"		default="true"/>
+  <arg name="amcl"		    default="true"/>
   <arg name="move_base"		default="false"/>
-  <arg name="rviz"		default="false"/>
+  <arg name="rviz"		    default="false"/>
   <arg name="rviz_sample"	default="true"/>
   <arg name="make_goal"		default="false"/>
   <arg name="pure_pursuit"	default="true"/>

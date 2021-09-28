@@ -6,14 +6,15 @@
   <arg name="joystick" 		default="true"/>
   <arg name="controller" 	default="true"/>
   <arg name="arduino" 		default="true"/>
-  <arg name="urg"		default="true"/>
+  <arg name="urg"		    default="true"/>
   <arg name="odometry"		default="true"/>
   <arg name="map_server"	default="true"/>
-  <arg name="amcl"		default="true"/>
-  <arg name="move_base"		default="true"/>
-  <arg name="rviz"		default="false"/>
+  <arg name="amcl"		    default="true"/>
+  <arg name="move_base"		default="false"/>
+  <arg name="rviz"		    default="false"/>
   <arg name="rviz_sample"	default="false"/>
   <arg name="make_goal"		default="false"/>
+  <arg name="pure_pursuit"	default="true"/>
 
   <group if="$(arg joystick)">
     <node name="joystick" pkg="joy" type="joy_node" required="true">
@@ -84,6 +85,15 @@
 
   <group if="$(arg make_goal)">
     <node pkg="robot03_navigation" type="make_goal" name="make_goal" required="true"/>
+  </group>
+
+  <group if="$(arg pure_pursuit)">
+    <node pkg="robot03_navigation" type="pure_pursuit" name="pure_pursuit" required="true">
+      <param name="FRIQUENCE" value="20"/>
+      <param name="den" value="20"/>
+      <param name="ahed" value="5"/>
+      <param name="vel" value="0.2"/>
+    </node>
   </group>
 
 </launch>
