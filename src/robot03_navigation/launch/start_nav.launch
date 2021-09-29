@@ -47,8 +47,8 @@
     <node pkg="urg_node" name="urg_node" type="urg_node" required="true">
       <param name="frame_id" value="base_laser"/>
       <param name="serial_port" value="/dev/serial/by-id/usb-Hokuyo_Data_Flex_for_USB_URG-Series_USB_Driver-if00"/>
-      <param name="angle_max" value="1.0"/>
-      <param name="angle_min" value="-1.4"/>
+      <param name="angle_max" value="1.3"/>
+      <param name="angle_min" value="-1.3"/>
     </node>
   </group>
   
