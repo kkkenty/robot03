@@ -26,7 +26,7 @@
     <node name="controller" pkg="robot03_navigation" type="controller5" output="screen" required="true">
       <param name="kv" value="0.45"/> <!-- value="0.45" -->
       <param name="kw" value="1.50"/> <!-- value="1.50" -->
-      <param name="d"  value="0.16"/>
+      <param name="d"  value="0.15"/>
       <param name="kp" value="130.0"/>
       <param name="ki" value="4.0"/>
       <param name="kd"  value="-0.5"/>
@@ -54,7 +54,7 @@
   
   <group if="$(arg odometry)">
     <node pkg="robot03_navigation" name="odometry" type="odometry" output="screen" required="true">
-      <param name="d"  value="0.16"/>
+      <param name="d"  value="0.15"/>
       <param name="FRIQUENCE" value="100"/>
     </node>
   </group>
@@ -89,10 +89,10 @@
   
   <group if="$(arg pure_pursuit)">
     <node pkg="robot03_navigation" type="pure_pursuit" name="pure_pursuit" required="true">
-      <param name="FRIQUENCE" value="50"/>
+      <param name="FRIQUENCE" value="20"/>
       <param name="den" value="40"/>
       <param name="ahed" value="5"/>
-      <param name="vel" value="0.2"/>
+      <param name="vel" value="0.25"/>
     </node>
   </group>
 
