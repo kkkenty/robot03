@@ -14,7 +14,7 @@
       <param name="kP" value="5.0"/>
       <param name="kv" value="1.0"/>
       <param name="kw" value="2.0"/>
-      <param name="d"  value="0.2"/>
+      <param name="d"  value="0.125"/>
       <param name="FRIQUENCE" value="100"/>
     </node>
   </group>

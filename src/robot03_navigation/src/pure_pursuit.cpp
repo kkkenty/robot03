@@ -38,6 +38,7 @@ void dismin(const double &x, const double &y, int &cr, int &ad, const int &den){
         mode = 2;
       }
       else if(mode == 2){ // 最短経路の更新が途絶えたら終了
+        j = ad; i = cr;
         return;
       }
     }
