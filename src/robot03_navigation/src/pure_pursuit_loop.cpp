@@ -11,6 +11,7 @@ double goal[pt][2] = {{-0.5, -0.2}, {1.0, -0.2}, {1.0, -1.2}, {-0.5, -1.2}, {-0.
 //double goal[pt][2] = {{0.3, -0.5}, {4.0, -0.5}, {4.0, -2.2}, {0.3, -2.2}, {0.3, -0.5}}; // robosa
 double path[pt-1][2]; // 目標経路
 int FRIQUENCE = 20, den = 20, ahed = 5, stap = 0; // 経路分割数、lookaheddistance、停止変数
+double vel = 0.1; // ロボットの速度
 
 // 第1,2引数と第3,4引数の点間距離を算出
 double dis(double x, double y, double ax, double ay){
@@ -73,6 +74,20 @@ void joyCb(const sensor_msgs::Joy &joy_msg)
       stap = 0;
     }
   }
+  if(joy_msg.buttons[4]){
+    vel += 0.05;
+    if(vel > 0.45){
+      vel = 0.45;
+    }
+    ROS_INFO("Now, velocity is [%lf]", vel);
+  }
+  if(joy_msg.buttons[5]){
+    vel -= 0.05;
+    if(vel < 0.05){
+      vel = 0.05;
+    }
+    ROS_INFO("Now, velocity is [%lf]", vel);
+  }
 }
 
 int main(int argc, char** argv){
@@ -81,7 +96,7 @@ int main(int argc, char** argv){
   ros::NodeHandle pnh("~");
   // 変数宣言
   int stage = 0; // 周回変数
-  double x = 0.0, y = 0.0, yaw = 0.0, vel = 0.1; // robot's pose
+  double x = 0.0, y = 0.0, yaw = 0.0; // robot's pose
   double gx = 0.0, gy = 0.0, gduty = 0.0; // ahed's pose
   double alpha = 0.0, L = 0.0; // 方位誤差、距離
   static int cr = 0, ad = 0, gcr = 0, gad = 0; // 現在の経路番号、位置、目標店の経路番号、位置
