@@ -7,8 +7,8 @@
 
 // global変数
 const int pt = 5; //目標地点の個数
-double goal[pt][2] = {{-0.5, -0.2}, {1.0, -0.2}, {1.0, -1.2}, {-0.5, -1.2}, {-0.5, -0.2}}; // sister's room
-//double goal[pt][2] = {{0.3, -0.5}, {4.0, -0.5}, {4.0, -2.2}, {0.3, -2.2}, {0.3, -0.5}}; // robosa
+//double goal[pt][2] = {{-0.5, -0.2}, {1.0, -0.2}, {1.0, -1.2}, {-0.5, -1.2}, {-0.5, -0.2}}; // sister's room
+double goal[pt][2] = {{0.3, -0.5}, {4.0, -0.5}, {4.0, -2.2}, {0.3, -2.2}, {0.3, -0.5}}; // robosa
 double path[pt-1][2]; // 目標経路
 int FRIQUENCE = 20, den = 20, ahed = 5, stap = 0; // 経路分割数、lookaheddistance、停止変数
 double vel = 0.1; // ロボットの速度

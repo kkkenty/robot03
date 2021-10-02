@@ -2,7 +2,7 @@
   <!-- Arguments -->
   <arg name="move_forward_only" default="false"/>
 
-  <arg name="map_file"		default="$(find create_map)/map/version4.yaml"/>
+  <arg name="map_file"		default="$(find create_map)/map/test2.yaml"/>
   <arg name="joystick" 		default="true"/>
   <arg name="controller" 	default="true"/>
   <arg name="arduino" 		default="true"/>
