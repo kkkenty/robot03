@@ -102,7 +102,7 @@
       <param name="FRIQUENCE" value="20"/>
       <param name="den" value="40"/>
       <param name="ahed" value="15"/>
-      <param name="vel" value="0.2"/>
+      <param name="vel" value="0.35"/>
     </node>
   </group>
 
