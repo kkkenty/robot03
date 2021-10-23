@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /TF1/Frames1
         - /TF1/Tree1
+        - /LaserScan1
         - /Global Map1/Costmap1
         - /Global Map1/Planner1
         - /Local Map1/Polygon1
@@ -91,7 +92,7 @@ Visualization Manager:
       Axis: Z
       Channel Name: intensity
       Class: rviz/LaserScan
-      Color: 0; 255; 0
+      Color: 204; 0; 0
       Color Transformer: FlatColor
       Decay Time: 0
       Enabled: true
@@ -291,7 +292,7 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 96.87796020507812
+      Scale: 119.77376556396484
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
       X: 1.8870775699615479
