@@ -4,11 +4,14 @@
 #include <geometry_msgs/Twist.h>
 #include <math.h>
 #include <sensor_msgs/Joy.h>
+#include <visualization_msgs/Marker.h>
 
 // global変数
 const int pt = 5; //目標地点の個数
-//double goal[pt][2] = {{-0.5, -0.2}, {1.0, -0.2}, {1.0, -1.2}, {-0.5, -1.2}, {-0.5, -0.2}}; // sister's room
-double goal[pt][2] = {{0.3, -0.6}, {4.0, -0.6}, {4.0, -2.1}, {0.3, -2.1}, {0.3, -0.6}}; // robosa
+// sister's room
+//double goal[pt][2] = {{-0.5, -0.2}, {1.0, -0.2}, {1.0, -1.2}, {-0.5, -1.2}, {-0.5, -0.2}}; 
+// robosa
+double goal[pt][2] = {{0.3, -0.6}, {4.0, -0.6}, {4.0, -2.1}, {0.3, -2.1}, {0.3, -0.6}}; 
 double path[pt-1][2]; // 目標経路
 int FRIQUENCE = 20, den = 20, ahed = 5, stap = 0; // 経路分割数、lookaheddistance、停止変数
 double vel = 0.1; // ロボットの速度
@@ -95,12 +98,12 @@ int main(int argc, char** argv){
   ros::NodeHandle nh;
   ros::NodeHandle pnh("~");
   // 変数宣言
-  int stage = 0; // 周回変数
+  int stage = 0, i; // 周回変数
   double x = 0.0, y = 0.0, yaw = 0.0; // robot's pose
   double gx = 0.0, gy = 0.0, gduty = 0.0; // ahed's pose
   double alpha = 0.0, L = 0.0; // 方位誤差、距離
   static int cr = 0, ad = 0, gcr = 0, gad = 0; // 現在の経路番号、位置、目標店の経路番号、位置
-  for(int i= 0;i < pt - 1; i++){
+  for(i= 0;i < pt - 1; i++){
     path[i][0] = goal[i+1][0] - goal[i][0]; // x
     path[i][1] = goal[i+1][1] - goal[i][1]; // y
     //cout << "x:" << path[i][0] << ", y:" << path[i][1] << endl;
@@ -112,7 +115,26 @@ int main(int argc, char** argv){
   pnh.getParam("ahed", ahed);
   pnh.getParam("vel", vel);
   
+  visualization_msgs::Marker line_strip;
+  line_strip.header.frame_id = "map";
+  line_strip.header.stamp = ros::Time::now();
+  line_strip.ns = "path";
+  line_strip.action = visualization_msgs::Marker::ADD;
+  line_strip.pose.orientation.w = 1.0;
+  line_strip.id = 1;
+  line_strip.type = visualization_msgs::Marker::LINE_STRIP;
+  line_strip.scale.x = 0.02;
+  line_strip.color.g = 1.0;
+  line_strip.color.b = 1.0;
+  line_strip.color.a = 1.0;
+  geometry_msgs::Point p;
+  for(i=0;i<pt;i++){
+    p.x = goal[i][0]; p.y = goal[i][1];
+    line_strip.points.push_back(p);
+  }
+  
   ros::Publisher cmd_pub = nh.advertise<geometry_msgs::Twist>("cmd_vel", 10);
+  ros::Publisher marker_pub = nh.advertise<visualization_msgs::Marker>("marker", 10);
   ros::Subscriber joy_sub = nh.subscribe("joy", 10, joyCb);
   tf::TransformListener listener;
   ros::Rate rate(FRIQUENCE);
@@ -170,6 +192,7 @@ int main(int argc, char** argv){
     
     // 車速の配信
     cmd_pub.publish(cmd);
+    marker_pub.publish(line_strip);
   }
   return 0;
 }

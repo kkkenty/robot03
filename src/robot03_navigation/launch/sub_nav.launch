@@ -10,11 +10,10 @@
   <arg name="odometry"		default="false"/>
   <arg name="map_server"	default="true"/>
   <arg name="amcl"		default="true"/>
-  <arg name="rviz_sample"	default="true"/>
-  <arg name="pure_pursuit_loop"	default="false"/>
+  <arg name="rviz"		default="true"/>
+  <arg name="pure_pursuit_loop"	default="true"/>
 
   <arg name="move_base"		default="false"/>
-  <arg name="rviz"		default="false"/>
   <arg name="make_goal"		default="false"/>
   <arg name="pure_pursuit"	default="false"/>
 
@@ -75,18 +74,13 @@
     </include>
   </group>
 
-  <group if="$(arg rviz)"> 
-    <node pkg="rviz" type="rviz" name="rviz" required="true"
-          args="-d $(find robot03_navigation)/rviz/debug_nav.rviz"/>
-  </group>
-
   <group if="$(arg make_goal)">
     <node pkg="robot03_navigation" type="make_goal" name="make_goal" required="true"/>
   </group>
 
-  <group if="$(arg rviz_sample)">
+  <group if="$(arg rviz)">
     <node pkg="rviz" type="rviz" name="rviz" required="true"
-          args="-d $(find robot03_navigation)/rviz/turtlebot3_navigation.rviz"/>
+          args="-d $(find robot03_navigation)/rviz/robot03_navi.rviz"/>
   </group>
   
   <group if="$(arg pure_pursuit)">

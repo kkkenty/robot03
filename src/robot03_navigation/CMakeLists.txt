@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   msgs
   move_base
   sensor_msgs
+  visualization_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -144,7 +145,7 @@ add_executable(controller5 src/controller5.cpp)
 add_executable(make_goal src/make_goal.cpp)
 add_executable(pure_pursuit src/pure_pursuit.cpp)
 add_executable(pure_pursuit_loop src/pure_pursuit_loop.cpp)
-add_executable(estimation src/estimation.cpp)
+#add_executable(estimation src/estimation.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -160,7 +161,7 @@ add_dependencies(controller5 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORT
 add_dependencies(make_goal ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(pure_pursuit ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(pure_pursuit_loop ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(estimation ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#add_dependencies(estimation ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
@@ -181,9 +182,9 @@ target_link_libraries(pure_pursuit
 target_link_libraries(pure_pursuit_loop
   ${catkin_LIBRARIES}
 )
-target_link_libraries(estimation
-  ${catkin_LIBRARIES}
-)
+#target_link_libraries(estimation
+#  ${catkin_LIBRARIES}
+#)
 #############
 ## Install ##
 #############
