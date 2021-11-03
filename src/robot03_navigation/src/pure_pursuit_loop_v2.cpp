@@ -12,9 +12,8 @@ const int pt = 5; //目標地点の個数
 //double goal[pt][2] = {{-0.5, -0.2}, {1.0, -0.2}, {1.0, -1.2}, {-0.5, -1.2}, {-0.5, -0.2}}; 
 // robosa
 double goal[pt][2] = {{0.3, -0.6}, {4.0, -0.6}, {4.0, -2.1}, {0.3, -2.1}, {0.3, -0.6}}; 
-double path[pt-1][2]; // 目標経路
-int FRIQUENCE = 20, den = 20, ahed = 5, stap = 0; // 経路分割数、lookaheddistance、停止変数
-double vel = 0.1; // ロボットの速度
+int FRIQUENCE = 20, den = 100, ahed = 5, stap = 0; // 経路分割数、lookaheddistance、停止変数
+double vel = 0.35; // ロボットの速度
 
 // 第1,2引数と第3,4引数の点間距離を算出
 double dis(double x, double y, double ax, double ay){
@@ -88,25 +87,35 @@ void joyCb(const sensor_msgs::Joy &joy_msg)
 }
 
 int main(int argc, char** argv){
-  ros::init(argc, argv, "pure_pursuit_loop");
+  ros::init(argc, argv, "pure_pursuit_loop_v2");
   ros::NodeHandle nh;
   ros::NodeHandle pnh("~");
   
-  int i;
-  double x = 0.0, y = 0.0, yaw = 0.0; // robot's pose
-  double gx = 0.0, gy = 0.0, gduty = 0.0; // ahed's pose
-  double alpha = 0.0, L = 0.0; // 方位誤差、距離
-  static int cr = 0, ad = 0, gcr = 0, gad = 0; // 現在の経路番号、位置、目標店の経路番号、位置
-  for(i= 0;i < pt - 1; i++){
-    path[i][0] = goal[i+1][0] - goal[i][0]; // x
-    path[i][1] = goal[i+1][1] - goal[i][1]; // y
-  }
   tf::StampedTransform tf;
   geometry_msgs::Twist cmd;
   pnh.getParam("FRIQUENCE", FRIQUENCE);
   pnh.getParam("den", den);
   pnh.getParam("ahed", ahed);
   pnh.getParam("vel", vel);
+  
+  int i;
+  double x = 0.0, y = 0.0, yaw = 0.0; // robot's pose
+  double gx = 0.0, gy = 0.0, gduty = 0.0; // ahed's pose
+  double alpha = 0.0, L = 0.0, sumpath = 0.0; // 方位誤差、距離、総経路距離
+  static int cr = 0, ad = 0, gcr = 0, gad = 0; // 現在の経路番号、位置、目標店の経路番号、位置
+    
+  // 点線経路の作成 //
+  double dotpath[den][2]; // 点線の座標
+  double path[pt-1]; // 各経路長
+  int npath[pt-1], sumn = 0; // 全体に対する経路への整数変換、経路の分割数
+  for(i= 0;i<pt-1;i++){
+    path[i] = sqrt(pow(goal[i+1][0]-goal[i][0], 2) + pow(goal[i+1][1]-goal[i][1], 2));
+    sumpath += path[i];
+  }
+  for(i=0;i<pt-1;i++){
+    npath[i] = abs( (int)(path[i] / sumpath * (double)den) );
+    sumn += npath[i];
+  }
   
   visualization_msgs::Marker line, npoint, gpoint;
   line.header.frame_id = npoint.header.frame_id = gpoint.header.frame_id = "map";
