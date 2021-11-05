@@ -3,28 +3,27 @@
   <arg name="move_forward_only" default="false"/>
 
   <arg name="map_file"		default="$(find create_map)/map/test2.yaml"/>
-  <arg name="joystick" 		default="true"/>
-  <arg name="controller" 	default="true"/>
-  <arg name="arduino" 		default="true"/>
-  <arg name="urg"		default="true"/>
-  <arg name="odometry"		default="true"/>
+  <arg name="joystick" 		default="false"/>
+  <arg name="controller" 	default="false"/>
+  <arg name="arduino" 		default="false"/>
+  <arg name="urg"		default="false"/>
+  <arg name="odometry"		default="false"/>
   <arg name="map_server"	default="true"/>
   <arg name="amcl"		default="true"/>
+  <arg name="rviz"		default="true"/>
+  <arg name="pure_pursuit"	default="true"/>
+
   <arg name="move_base"		default="false"/>
-  <arg name="rviz"		default="false"/>
-  <arg name="rviz_sample"	default="false"/>
   <arg name="make_goal"		default="false"/>
-  <arg name="pure_pursuit"	default="false"/>
-  <arg name="pure_pursuit_loop"	default="true"/>
 
   <group if="$(arg joystick)">
     <node name="joystick" pkg="joy" type="joy_node" required="true">
-      <param name="dev" value="/dev/input/js0"/>
+      <param name="dev" value="/dev/input/js2"/>
     </node>
   </group>
 
   <group if="$(arg controller)">
-    <node name="controller" pkg="robot03_navigation" type="controller5" output="screen" required="true">
+    <node name="controller" pkg="navi" type="controller5" output="screen" required="true">
       <param name="kv" value="0.45"/> <!-- value="0.45" -->
       <param name="kw" value="1.50"/> <!-- value="1.50" -->
       <param name="d"  value="0.125"/>
@@ -54,7 +53,7 @@
   </group>
   
   <group if="$(arg odometry)">
-    <node pkg="robot03_navigation" name="odometry" type="odometry" output="screen" required="true">
+    <node pkg="navi" name="odometry" type="odometry" output="screen" required="true">
       <param name="d"  value="0.125"/>
       <param name="FRIQUENCE" value="100"/>
     </node>
@@ -65,42 +64,30 @@
   </group>
 
   <group if="$(arg amcl)">
-    <include file="$(find robot03_navigation)/launch/amcl.launch"/>
+    <include file="$(find navi)/launch/amcl.launch"/>
   </group>
 
   <group if="$(arg move_base)">
-    <include file="$(find robot03_navigation)/launch/move_base.launch">
+    <include file="$(find navi)/launch/move_base.launch">
       <arg name="move_forward_only" value="$(arg move_forward_only)"/>
     </include>
   </group>
 
-  <group if="$(arg rviz)"> 
-    <node pkg="rviz" type="rviz" name="rviz" required="true"
-          args="-d $(find robot03_navigation)/rviz/debug_nav.rviz"/>
-  </group>
-
   <group if="$(arg make_goal)">
-    <node pkg="robot03_navigation" type="make_goal" name="make_goal" required="true"/>
+    <node pkg="navi" type="make_goal" name="make_goal" required="true"/>
   </group>
 
-  <group if="$(arg rviz_sample)">
+  <group if="$(arg rviz)">
     <node pkg="rviz" type="rviz" name="rviz" required="true"
-          args="-d $(find robot03_navigation)/rviz/turtlebot3_navigation.rviz"/>
+          args="-d $(find navi)/rviz/robot03_navi.rviz"/>
   </group>
   
   <group if="$(arg pure_pursuit)">
-    <node pkg="robot03_navigation" type="pure_pursuit" name="pure_pursuit" output="screen" required="true">
+    <!-- node pkg="navi" type="pure_pursuit" name="pure_pursuit" output="screen" required="true" -->
+    <!-- node pkg="navi" type="pure_pursuit_loop" name="pure_pursuit" output="screen" required="true" -->
+    <node pkg="navi" type="pure_pursuit_loop_v2" name="pure_pursuit" output="screen" required="true">
       <param name="FRIQUENCE" value="20"/>
-      <param name="den" value="40"/>
-      <param name="ahed" value="5"/>
-      <param name="vel" value="0.2"/>
-    </node>
-  </group>
-  
-  <group if="$(arg pure_pursuit_loop)">
-    <node pkg="robot03_navigation" type="pure_pursuit_loop" name="pure_pursuit_loop" output="screen" required="true">
-      <param name="FRIQUENCE" value="20"/>
-      <param name="den" value="40"/>
+      <param name="den" value="200"/>
       <param name="ahed" value="15"/>
       <param name="vel" value="0.35"/>
     </node>
