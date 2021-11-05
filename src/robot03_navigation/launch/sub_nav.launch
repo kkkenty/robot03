@@ -11,11 +11,10 @@
   <arg name="map_server"	default="true"/>
   <arg name="amcl"		default="true"/>
   <arg name="rviz"		default="true"/>
-  <arg name="pure_pursuit_loop"	default="true"/>
+  <arg name="pure_pursuit"	default="true"/>
 
   <arg name="move_base"		default="false"/>
   <arg name="make_goal"		default="false"/>
-  <arg name="pure_pursuit"	default="false"/>
 
   <group if="$(arg joystick)">
     <node name="joystick" pkg="joy" type="joy_node" required="true">
@@ -84,18 +83,11 @@
   </group>
   
   <group if="$(arg pure_pursuit)">
-    <node pkg="robot03_navigation" type="pure_pursuit" name="pure_pursuit" output="screen" required="true">
+    <!-- node pkg="robot03_navigation" type="pure_pursuit" name="pure_pursuit" output="screen" required="true" -->
+    <!-- node pkg="robot03_navigation" type="pure_pursuit_loop" name="pure_pursuit" output="screen" required="true" -->
+    <node pkg="robot03_navigation" type="pure_pursuit_loop_v2" name="pure_pursuit" output="screen" required="true">
       <param name="FRIQUENCE" value="20"/>
-      <param name="den" value="40"/>
-      <param name="ahed" value="5"/>
-      <param name="vel" value="0.2"/>
-    </node>
-  </group>
-  
-  <group if="$(arg pure_pursuit_loop)">
-    <node pkg="robot03_navigation" type="pure_pursuit_loop" name="pure_pursuit_loop" output="screen" required="true">
-      <param name="FRIQUENCE" value="20"/>
-      <param name="den" value="40"/>
+      <param name="den" value="200"/>
       <param name="ahed" value="15"/>
       <param name="vel" value="0.35"/>
     </node>

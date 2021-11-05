@@ -6,7 +6,7 @@
 #include <sensor_msgs/Joy.h>
 #include <visualization_msgs/Marker.h>
 
-//** global変数 **// 
+// global変数 // 
 const int pt = 5; //目標地点の個数
 // sister's room
 //double goal[pt][2] = {{-0.5, -0.2}, {1.0, -0.2}, {1.0, -1.2}, {-0.5, -1.2}, {-0.5, -0.2}}; 
@@ -22,39 +22,36 @@ double dis(double x, double y, double ax, double ay){
 
 // 最も近い点を選択(局所解は無いと仮定)
 // 第1,2引数：現在座標、第3,4引数：現在の経路番号、位置(参照渡し)
-void dismin(const double &x, const double &y, int &cr, int &ad){
-  int mode = 0, count = 0; // 計算状態変数、カウント変数
-  double mindis = 0.0, nowdis = 0.0, duty = 0.0; // 最小経路値、現在経路値、経路分割の割合
-  static int i = 0, j = 0;
-  while(count <= (pt - 1) * den){ // 全探索しない限り周回
-    for(; i < pt - 1; i++){ // 目標経路の更新
-      for(; j < den; j++){ // 位置の更新
-        duty = (double)j / (double)den;
-        nowdis = dis(x, y, goal[i][0]+(path[i][0]*duty), goal[i][1]+(path[i][1]*duty));
-        count++;
-        if(mode == 0){ // 初期化
-          mindis = nowdis;
-          ad = j;  cr = i;
-          mode = 1;
-          continue;
-        }
-        if(mindis > nowdis){ // 最短距離の更新
-          mindis = nowdis;
-          ad = j;  cr = i;
-          mode = 2;
-        }
-        else if(mode == 2){ // 最短経路の更新が途絶えたら終了
-          j = ad; i = cr; // 現在の位置を保持
-          return;
-        }
-        if(count > (pt - 1) * den){
-          j = ad; i = cr; // 現在の位置を保持
-          return;
-        }
+int dismin(const double &x, const double &y, int &sum, double dotpath[][2]){
+  static int nowpose = 0, lastpose = 0;
+  int i, mode = 0, count = 0; // 計算状態変数
+  double mindis, nowdis; // 最小経路値、現在経路値
+
+  while(count <= sum){ // 全探索しない限り周回
+    for(i=lastpose;i<sum;i++){ // 目標経路の更新
+      nowdis = dis(x, y, dotpath[i][0], dotpath[i][1]);
+      count++;
+      if(mode == 0){ // 初期化
+        mindis = nowdis;
+        nowpose = i;
+        mode = 1;
+        continue;
       }
-      j = 0; // 位置のリセット
+      if(mindis > nowdis){ // 最短距離の更新
+        mindis = nowdis;
+        nowpose = i;
+        mode = 2;
+      }
+      else if(mode == 2){ // 最短経路の更新が途絶えたら終了
+        lastpose = nowpose; // 現在の位置を保持
+        return nowpose;
+      }
+      if(count > sum){ // 初期位置が最短の場合
+        lastpose = nowpose; // 現在の位置を保持
+        return nowpose;
+      }
     }
-    i = 0; // 経路のリセット
+    lastpose = 0;
   }
 }
 
@@ -98,46 +95,51 @@ int main(int argc, char** argv){
   pnh.getParam("ahed", ahed);
   pnh.getParam("vel", vel);
   
-  int i;
+  int i, j, k;
   double x = 0.0, y = 0.0, yaw = 0.0; // robot's pose
-  double gx = 0.0, gy = 0.0, gduty = 0.0; // ahed's pose
-  double alpha = 0.0, L = 0.0, sumpath = 0.0; // 方位誤差、距離、総経路距離
+  double alpha = 0.0, L = 0.0; // 方位誤差、距離
   static int cr = 0, ad = 0, gcr = 0, gad = 0; // 現在の経路番号、位置、目標店の経路番号、位置
-    
+  
+  // Markerの定義 //
+  visualization_msgs::Marker points, npoint, gpoint;
+  points.header.frame_id = npoint.header.frame_id = gpoint.header.frame_id = "map";
+  points.header.stamp = npoint.header.stamp = gpoint.header.stamp = ros::Time::now();
+  points.ns = npoint.ns = gpoint.ns = "line_and_points";
+  points.action = npoint.action = gpoint.action = visualization_msgs::Marker::ADD;
+  points.pose.orientation.w = npoint.pose.orientation.w = gpoint.pose.orientation.w = 1.0;
+  points.id = 0;  npoint.id = 1;  gpoint.id = 2;
+  points.type = npoint.type = gpoint.type = visualization_msgs::Marker::POINTS;
+  points.scale.x = points.scale.y = 0.03;
+  npoint.scale.x = npoint.scale.y = gpoint.scale.x = gpoint.scale.y = 0.1; 
+  points.color.r = points.color.g = points.color.b = points.color.a = 1.0;
+  npoint.color.g = npoint.color.a = 1.0;
+  gpoint.color.r = gpoint.color.a = 1.0;
+  
   // 点線経路の作成 //
-  double dotpath[den][2]; // 点線の座標
-  double path[pt-1]; // 各経路長
-  int npath[pt-1], sumn = 0; // 全体に対する経路への整数変換、経路の分割数
+  double path[pt-1][2], lpath[pt-1], sumpath = 0.0; // 各経路、総経路距離
+  int npath[pt-1], sum = 0; // 全体に対する経路への整数変換、全体の分割数
   for(i= 0;i<pt-1;i++){
-    path[i] = sqrt(pow(goal[i+1][0]-goal[i][0], 2) + pow(goal[i+1][1]-goal[i][1], 2));
-    sumpath += path[i];
+    path[i][0] = goal[i+1][0] - goal[i][0]; // x
+    path[i][1] = goal[i+1][1] - goal[i][1]; // y
+    lpath[i] = sqrt(pow(path[i][0], 2) + pow(path[i][1], 2));
+    sumpath += lpath[i];
   }
   for(i=0;i<pt-1;i++){
-    npath[i] = abs( (int)(path[i] / sumpath * (double)den) );
-    sumn += npath[i];
+    npath[i] = round((int)(lpath[i] / sumpath * (double)den));
+    sum += npath[i];
   }
-  
-  visualization_msgs::Marker line, npoint, gpoint;
-  line.header.frame_id = npoint.header.frame_id = gpoint.header.frame_id = "map";
-  line.header.stamp = npoint.header.stamp = gpoint.header.stamp = ros::Time::now();
-  line.ns = npoint.ns = gpoint.ns = "line_and_points";
-  line.action = npoint.action = gpoint.action = visualization_msgs::Marker::ADD;
-  line.pose.orientation.w = npoint.pose.orientation.w = gpoint.pose.orientation.w = 1.0;
-  line.id = 0;  npoint.id = 1;  gpoint.id = 2;
-  line.type = visualization_msgs::Marker::LINE_STRIP;
-  npoint.type = gpoint.type = visualization_msgs::Marker::POINTS;
-  line.scale.x = 0.02;
-  npoint.scale.x = npoint.scale.y = gpoint.scale.x = gpoint.scale.y = 0.1; 
-  line.color.g = 1.0;  line.color.b = 1.0;  line.color.a = 1.0;
-  npoint.color.g = 1.0;  npoint.color.a = 1.0;
-  gpoint.color.r = 1.0;  gpoint.color.a = 1.0;
-  
+  double dotpath[sum][2]; // 点線の座標
   geometry_msgs::Point p;
-  for(i=0;i<pt;i++){
-    p.x = goal[i][0]; p.y = goal[i][1];
-    line.points.push_back(p);
+  for(i=0,k=0;i<pt-1;i++){
+      for(j=0;j<npath[i];j++){
+          p.x = dotpath[k][0] = goal[i][0] + (path[i][0] * (double)j / (double)npath[i]);
+          p.y = dotpath[k][1] = goal[i][1] + (path[i][1] * (double)j / (double)npath[i]);
+          points.points.push_back(p);
+          k++;
+      }
   }
   
+  // pubsub宣言 //
   ros::Publisher cmd_pub = nh.advertise<geometry_msgs::Twist>("cmd_vel", 10);
   ros::Publisher marker_pub = nh.advertise<visualization_msgs::Marker>("marker", 10);
   ros::Subscriber joy_sub = nh.subscribe("joy", 10, joyCb);
@@ -147,6 +149,7 @@ int main(int argc, char** argv){
   while(nh.ok()){
     rate.sleep();
     ros::spinOnce();
+    
     // 点Markerの初期化(もっと良い初期化の方法は無いかな...)
     visualization_msgs::Marker npoint, gpoint;
     npoint.header.frame_id = gpoint.header.frame_id = "map";
@@ -174,30 +177,24 @@ int main(int argc, char** argv){
     }
     
     // 最も近い点を選択
-    dismin(x, y, cr, ad);
-    gduty = (double)ad / (double)den;
-    p.x = goal[cr][0] + (path[cr][0] * gduty);
-    p.y = goal[cr][1] + (path[cr][1] * gduty); 
+    static int pose = 0;
+    pose = dismin(x, y, sum, dotpath);
+    p.x = dotpath[pose][0];
+    p.y = dotpath[pose][1]; 
     npoint.points.push_back(p);
     
     // 目標点の設定
-    gcr = cr;
-    gad = ad + ahed;
-    if(gad >= den){ // 経路の更新
-      gcr++;
-      gad -= den;
+    pose += ahed;
+    if(pose >= sum){ // poseの繰り上げ
+      pose -= sum;
     }
-    if(gcr >= pt - 1){ // 最終経路での処置
-      gcr = 0;
-    }
-    gduty = (double)gad / (double)den;
-    p.x = gx = goal[gcr][0] + (path[gcr][0] * gduty);
-    p.y = gy = goal[gcr][1] + (path[gcr][1] * gduty);
+    p.x = dotpath[pose][0];
+    p.y = dotpath[pose][1];
     gpoint.points.push_back(p);
     
     // 目標点との相対的な角度、距離の算出
-    alpha = atan2(gy - y, gx - x) - yaw;
-    L = dis(x, y, gx, gy);
+    alpha = atan2(dotpath[pose][1] - y, dotpath[pose][0] - x) - yaw;
+    L = dis(x, y, dotpath[pose][0], dotpath[pose][1]);
     
     // 車速と角速度の算出
     cmd.linear.x = vel;
@@ -209,7 +206,7 @@ int main(int argc, char** argv){
     
     // 車速の配信
     cmd_pub.publish(cmd);
-    marker_pub.publish(line);
+    marker_pub.publish(points);
     marker_pub.publish(npoint);
     marker_pub.publish(gpoint);
   }
