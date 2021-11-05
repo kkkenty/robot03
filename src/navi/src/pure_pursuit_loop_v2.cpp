@@ -40,20 +40,17 @@ int main(int argc, char** argv){
   double alpha = 0.0, L = 0.0; // 方位誤差、距離
   
   // Markerの定義 //
-  visualization_msgs::Marker points, npoint, gpoint;
-  points.header.frame_id = npoint.header.frame_id = gpoint.header.frame_id = "map";
-  points.header.stamp = npoint.header.stamp = gpoint.header.stamp = ros::Time::now();
-  points.ns = npoint.ns = gpoint.ns = "line_and_points";
-  points.action = npoint.action = gpoint.action = visualization_msgs::Marker::ADD;
-  points.pose.orientation.w = npoint.pose.orientation.w = gpoint.pose.orientation.w = 1.0;
-  points.id = 0;  npoint.id = 1;  gpoint.id = 2;
-  points.type = npoint.type = gpoint.type = visualization_msgs::Marker::POINTS;
+  visualization_msgs::Marker points;
+  points.header.frame_id = "map";
+  points.header.stamp = ros::Time::now();
+  points.ns = "line_and_points";
+  points.action = visualization_msgs::Marker::ADD;
+  points.pose.orientation.w = 1.0;
+  points.id = 0;
+  points.type = visualization_msgs::Marker::POINTS;
   points.scale.x = points.scale.y = 0.03;
-  npoint.scale.x = npoint.scale.y = gpoint.scale.x = gpoint.scale.y = 0.1; 
   points.color.r = points.color.g = points.color.b = points.color.a = 1.0;
-  npoint.color.g = npoint.color.a = 1.0;
-  gpoint.color.r = gpoint.color.a = 1.0;
-  
+
   // 点線経路の作成 //
   double path[pt-1][2], lpath[pt-1], sumpath = 0.0; // 各経路、総経路距離
   int npath[pt-1], sum = 0; // 全体に対する経路への整数変換、全体の分割数

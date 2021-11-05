@@ -142,11 +142,11 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/navi_node.cpp)
 add_executable(odometry src/odometry.cpp)
 add_executable(controller5 src/controller5.cpp)
-add_executable(make_goal src/make_goal.cpp)
-add_executable(pure_pursuit src/pure_pursuit.cpp)
-add_executable(pure_pursuit_loop src/pure_pursuit_loop.cpp)
+#add_executable(make_goal src/make_goal.cpp)
+#add_executable(pure_pursuit src/pure_pursuit.cpp)
+#add_executable(pure_pursuit_loop src/pure_pursuit_loop.cpp)
 add_executable(pure_pursuit_loop_v2 src/pure_pursuit_loop_v2.cpp)
-#add_executable(estimation src/estimation.cpp)
+add_executable(estimation src/estimation.cpp)
 
 
 ## Rename C++ executable without prefix
@@ -160,11 +160,11 @@ add_executable(pure_pursuit_loop_v2 src/pure_pursuit_loop_v2.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(odometry ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(controller5 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(make_goal ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(pure_pursuit ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(pure_pursuit_loop ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#add_dependencies(make_goal ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#add_dependencies(pure_pursuit ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#add_dependencies(pure_pursuit_loop ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(pure_pursuit_loop_v2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-#add_dependencies(estimation ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(estimation ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 
 ## Specify libraries to link a library or executable target against
@@ -177,21 +177,23 @@ target_link_libraries(odometry
 target_link_libraries(controller5
   ${catkin_LIBRARIES}
 )
-target_link_libraries(make_goal
-  ${catkin_LIBRARIES}
-)
-target_link_libraries(pure_pursuit
-  ${catkin_LIBRARIES}
-)
-target_link_libraries(pure_pursuit_loop
-  ${catkin_LIBRARIES}
-)
+#target_link_libraries(make_goal
+#  ${catkin_LIBRARIES}
+#)
+#target_link_libraries(pure_pursuit
+#  ${catkin_LIBRARIES}
+#)
+#target_link_libraries(pure_pursuit_loop
+#  ${catkin_LIBRARIES}
+#)
 target_link_libraries(pure_pursuit_loop_v2
   ${catkin_LIBRARIES}
 )
-#target_link_libraries(estimation
-#  ${catkin_LIBRARIES}
-#)
+target_link_libraries(estimation
+  ${catkin_LIBRARIES}
+)
+
+
 #############
 ## Install ##
 #############
