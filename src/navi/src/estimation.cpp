@@ -19,10 +19,11 @@ int main(int argc, char** argv){
   ros::Publisher hough_pub = nh.advertise<visualization_msgs::Marker>("hough", 10);
   int w_den = 180, p_den = 180; // 量子化誤差3cm
   //int kmean = 3;
-  
-  int i, j, k, wp[w_den][p_den];
+  int i, j, k, wp[w_den][p_den], count = 0;
   double x = 0.0, y = 0.0, theta = 0.0, w, p;
   geometry_msgs::Point path;
+  FILE *fp;
+  char filepath[256];
   ros::Rate rate(20);
   
   while(ros::ok()){
@@ -44,7 +45,7 @@ int main(int argc, char** argv){
     line.pose.orientation.w = 1.0;
     line.id = 3;
     line.type = visualization_msgs::Marker::LINE_STRIP;
-    line.scale.x = 0.01; 
+    line.scale.x = 0.1; 
     line.color.r = line.color.a = 1.0;
     
     // センサ情報からwp領域に変換 //
@@ -69,8 +70,12 @@ int main(int argc, char** argv){
     
     // 最大値のパラメータを検出 //
     int max = 0;
+    // データの出力 //
+    sprintf(filepath, "./data%d.csv", count);
+    fp = fopen(filepath, "w");
     for(i=0;i<w_den;i++){
       for(j=0;j<p_den;j++){
+        fprintf(fp, "%d", wp[i][j]);
         if(max < wp[i][j]){
           max = wp[i][j];
           w = M_PI * (double)i / (double)w_den;
@@ -78,17 +83,21 @@ int main(int argc, char** argv){
         }
       }
     }
+    fclose(fp);
+    
+    // データの出力 //
+    //ROS_INFO("w_den*p_den is [%d],  max is [%d]\n", w_den*p_den, max);
     
     // 直線データに変換 //
-    double len = 3.0, px[3], py[3];
+    double len = 10.0, px[3], py[3];
     for(i=0;i<3;i++){
       if(!(w == 0 || w == M_PI)){
         px[i] = len - (len * (double)i);
-        py[i] = p / sin(w) - px[i] * cos(w) / sin(w);
+        py[i] = p / sin(w) - px[i] / tan(w);
       }
       else{
         py[i] = len - (len * (double)i);
-        px[i] = p / cos(w) - py[i] * sin(w) / cos(w);
+        px[i] = p / cos(w) - py[i] * tan(w);
       }
       path.x = px[i];
       path.y = py[i];
