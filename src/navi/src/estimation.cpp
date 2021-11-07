@@ -5,7 +5,7 @@
 #include <visualization_msgs/Marker.h>
 
 sensor_msgs::LaserScan scan;
-const double diag = 6.0573;
+const double diag = 15.0; // diagonalの2倍（負値考慮）
 
 void cbScan(const sensor_msgs::LaserScan::ConstPtr &msg){
   scan = *msg;
@@ -19,11 +19,9 @@ int main(int argc, char** argv){
   ros::Publisher hough_pub = nh.advertise<visualization_msgs::Marker>("hough", 10);
   int w_den = 180, p_den = 180; // 量子化誤差3cm
   //int kmean = 3;
-  int i, j, k, wp[w_den][p_den], count = 0;
+  int i, j, k, wp[w_den][p_den];
   double x = 0.0, y = 0.0, theta = 0.0, w, p;
   geometry_msgs::Point path;
-  FILE *fp;
-  char filepath[256];
   ros::Rate rate(20);
   
   while(ros::ok()){
@@ -61,7 +59,7 @@ int main(int argc, char** argv){
           for(j=0; j<w_den; j++){
             w = M_PI * (double)j / (double)w_den;
             p = x * cos(w) + y * sin(w);
-            k = (int)round(p / diag * (double)p_den);
+            k = (int)round((0.50 + p / diag) * (double)p_den); // 常に正値
             wp[j][k]++;
           }
         }
@@ -70,23 +68,19 @@ int main(int argc, char** argv){
     
     // 最大値のパラメータを検出 //
     int max = 0;
-    // データの出力 //
-    sprintf(filepath, "./data%d.csv", count);
-    fp = fopen(filepath, "w");
     for(i=0;i<w_den;i++){
       for(j=0;j<p_den;j++){
-        fprintf(fp, "%d", wp[i][j]);
         if(max < wp[i][j]){
           max = wp[i][j];
           w = M_PI * (double)i / (double)w_den;
-          p = diag * (double)j / (double)p_den;
+          p = diag * ((double)j / (double)p_den - 0.50);
         }
       }
     }
-    fclose(fp);
     
     // データの出力 //
-    //ROS_INFO("w_den*p_den is [%d],  max is [%d]\n", w_den*p_den, max);
+    ROS_INFO("w_den*p_den is [%d],  max is [%d]\n", w_den*p_den, max);
+    //ROS_INFO("p is [%lf]\n", p);
     
     // 直線データに変換 //
     double len = 10.0, px[3], py[3];
