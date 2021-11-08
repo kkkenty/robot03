@@ -3,11 +3,11 @@
   <arg name="move_forward_only" default="false"/>
 
   <arg name="map_file"		default="$(find create_map)/map/test2.yaml"/>
-  <arg name="joystick" 		default="false"/>
-  <arg name="controller" 	default="false"/>
-  <arg name="arduino" 		default="false"/>
-  <arg name="urg"		default="false"/>
-  <arg name="odometry"		default="false"/>
+  <arg name="joystick" 		default="true"/>
+  <arg name="controller" 	default="true"/>
+  <arg name="arduino" 		default="true"/>
+  <arg name="urg"		default="true"/>
+  <arg name="odometry"		default="true"/>
   <arg name="map_server"	default="true"/>
   <arg name="amcl"		default="true"/>
   <arg name="rviz"		default="true"/>
@@ -18,7 +18,7 @@
 
   <group if="$(arg joystick)">
     <node name="joystick" pkg="joy" type="joy_node" required="true">
-      <param name="dev" value="/dev/input/js0"/>
+      <param name="dev" value="/dev/input/js2"/>
     </node>
   </group>
 
