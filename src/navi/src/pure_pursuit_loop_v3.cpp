@@ -1,3 +1,4 @@
+// まだ未完成、LED光らせるのができない
 #include <ros/ros.h>
 #include <tf/transform_listener.h>
 #include <tf/transform_datatypes.h>
@@ -5,13 +6,13 @@
 #include <math.h>
 #include <sensor_msgs/Joy.h>
 #include <visualization_msgs/Marker.h>
-#include "service/time.h"
+#include <std_msgs/Int32.h>
 
 // global変数 // 
 const int pt = 5; //目標地点の個数
 double goal[pt][2] = {{0.3, -0.6}, {4.0, -0.6}, {4.0, -2.1}, {0.3, -2.1}, {0.3, -0.6}}; // robosa
 //double goal[pt][2] = {{-0.5, -0.2}, {1.0, -0.2}, {1.0, -1.2}, {-0.5, -1.2}, {-0.5, -0.2}}; // sister's room
-int stap = 0; // 停止変数
+int stap = 1; // 停止変数
 double vel = 0.35; // ロボットの速度
 
 // 第1,2引数と第3,4引数の点間距離を算出 //
@@ -79,12 +80,12 @@ int main(int argc, char** argv){
   // pubsub宣言 //
   ros::Publisher cmd_pub = nh.advertise<geometry_msgs::Twist>("cmd_vel", 10);
   ros::Publisher marker_pub = nh.advertise<visualization_msgs::Marker>("marker", 10);
+  ros::Publisher led_pub = nh.advertise<std_msgs::Int32>("LED", 1);
   ros::Subscriber joy_sub = nh.subscribe("joy", 10, joyCb);
   tf::TransformListener listener;
   ros::Rate rate(FRIQUENCE);
-  ros::ServiceClient client = nh.serviceClient<service::time>("time");
-  service::time srv;
-  ros::Time set = ros::Time::now();
+  std_msgs::Int32 led_mode;
+  led_mode.data = 0;
   
   while(nh.ok()){
     rate.sleep();
@@ -109,12 +110,11 @@ int main(int argc, char** argv){
       x = tf.getOrigin().x();
       y = tf.getOrigin().y();
       yaw = tf::getYaw(tf.getRotation());
+      led_mode.data = 1;
     }
     catch(tf::TransformException ex){
       ROS_ERROR("%s", ex.what());
-      ros::Time now = ros::Time::now();
-      srv.request.t = now.toSec() - set.toSec();
-      client.call(srv);
+      //led_mode.data = 1;
       ros::Duration(1.0).sleep();
       continue;
     }
@@ -147,11 +147,12 @@ int main(int argc, char** argv){
       cmd.angular.z = 0.0;
     }
     
-    // 車速の配信 //
+    // pub配信 //
     cmd_pub.publish(cmd);
     marker_pub.publish(points);
     marker_pub.publish(npoint);
     marker_pub.publish(gpoint);
+    led_pub.publish(led_mode);
   }
   return 0;
 }

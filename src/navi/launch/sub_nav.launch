@@ -5,7 +5,7 @@
   <arg name="map_file"		default="$(find create_map)/map/test2.yaml"/>
   <arg name="joystick" 		default="false"/>
   <arg name="controller" 	default="false"/>
-  <arg name="arduino" 		default="false"/>
+  <arg name="arduino" 		default="true"/>
   <arg name="urg"		default="false"/>
   <arg name="odometry"		default="false"/>
   <arg name="map_server"	default="true"/>
@@ -85,11 +85,11 @@
   <group if="$(arg pure_pursuit)">
     <!-- node pkg="navi" type="pure_pursuit" name="pure_pursuit" output="screen" required="true" -->
     <!-- node pkg="navi" type="pure_pursuit_loop" name="pure_pursuit" output="screen" required="true" -->
-    <node pkg="navi" type="pure_pursuit_loop_v2" name="pure_pursuit" output="screen" required="true">
+    <node pkg="navi" type="pure_pursuit_loop_v3" name="pure_pursuit" output="screen" required="true">
       <param name="FRIQUENCE" value="20"/>
       <param name="den" value="200"/>
       <param name="ahed" value="15"/>
-      <param name="vel" value="0.35"/>
+      <param name="vel" value="0.45"/>
     </node>
   </group>
 
