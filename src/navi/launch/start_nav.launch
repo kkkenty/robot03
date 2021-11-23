@@ -1,9 +1,7 @@
 <launch>
   <!-- Arguments -->
-  <arg name="move_forward_only" default="false"/>
-
   <arg name="map_file"		default="$(find create_map)/map/test2.yaml"/>
-  <arg name="joystick" 		default="false"/>
+  <arg name="joystick" 		default="true"/>
   <arg name="controller" 	default="true"/>
   <arg name="arduino" 		default="true"/>
   <arg name="urg"		default="true"/>
@@ -14,11 +12,12 @@
   <arg name="pure_pursuit"	default="true"/>
 
   <arg name="move_base"		default="false"/>
+  <arg name="move_forward_only" default="false"/>
   <arg name="make_goal"		default="false"/>
 
   <group if="$(arg joystick)">
     <node name="joystick" pkg="joy" type="joy_node" required="true">
-      <param name="dev" value="/dev/input/js0"/>
+      <param name="dev" value="/dev/input/js2"/>
     </node>
   </group>
 
@@ -83,13 +82,11 @@
   </group>
   
   <group if="$(arg pure_pursuit)">
-    <!-- node pkg="navi" type="pure_pursuit" name="pure_pursuit" output="screen" required="true" -->
-    <!-- node pkg="navi" type="pure_pursuit_loop" name="pure_pursuit" output="screen" required="true" -->
     <node pkg="navi" type="pure_pursuit_loop_v2" name="pure_pursuit" output="screen" required="true">
       <param name="FRIQUENCE" value="20"/>
       <param name="den" value="200"/>
       <param name="ahed" value="15"/>
-      <param name="vel" value="0.35"/>
+      <param name="vel" value="0.45"/>
     </node>
   </group>
 

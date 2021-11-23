@@ -141,13 +141,15 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/navi_node.cpp)
 add_executable(odometry src/odometry.cpp)
+add_executable(odometryLED src/odometryLED.cpp)
 add_executable(controller5 src/controller5.cpp)
+add_executable(controllerLED src/controllerLED.cpp)
 #add_executable(make_goal src/make_goal.cpp)
 #add_executable(pure_pursuit src/pure_pursuit.cpp)
 #add_executable(pure_pursuit_loop src/pure_pursuit_loop.cpp)
-add_executable(pure_pursuit_loop_v2 src/pure_pursuit_loop_v2.cpp)
-add_executable(pure_pursuit_loop_v3 src/pure_pursuit_loop_v3.cpp)
-add_executable(estimation src/estimation.cpp)
+#add_executable(pure_pursuit_loop_v2 src/pure_pursuit_loop_v2.cpp)
+add_executable(pure_pursuit_LED src/pure_pursuit_LED.cpp)
+#add_executable(estimation src/estimation.cpp)
 
 
 ## Rename C++ executable without prefix
@@ -160,13 +162,15 @@ add_executable(estimation src/estimation.cpp)
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(odometry ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(odometryLED ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(controller5 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(controllerLED ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 #add_dependencies(make_goal ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 #add_dependencies(pure_pursuit ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 #add_dependencies(pure_pursuit_loop ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(pure_pursuit_loop_v2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(pure_pursuit_loop_v3 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(estimation ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#add_dependencies(pure_pursuit_loop_v2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(pure_pursuit_LED ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#add_dependencies(estimation ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 
 ## Specify libraries to link a library or executable target against
@@ -176,7 +180,13 @@ add_dependencies(estimation ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTE
 target_link_libraries(odometry
   ${catkin_LIBRARIES}
 )
+target_link_libraries(odometryLED
+  ${catkin_LIBRARIES}
+)
 target_link_libraries(controller5
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(controllerLED
   ${catkin_LIBRARIES}
 )
 #target_link_libraries(make_goal
@@ -188,15 +198,15 @@ target_link_libraries(controller5
 #target_link_libraries(pure_pursuit_loop
 #  ${catkin_LIBRARIES}
 #)
-target_link_libraries(pure_pursuit_loop_v2
+#target_link_libraries(pure_pursuit_loop_v2
+#  ${catkin_LIBRARIES}
+#)
+target_link_libraries(pure_pursuit_LED
   ${catkin_LIBRARIES}
 )
-target_link_libraries(pure_pursuit_loop_v3
-  ${catkin_LIBRARIES}
-)
-target_link_libraries(estimation
-  ${catkin_LIBRARIES}
-)
+#target_link_libraries(estimation
+#  ${catkin_LIBRARIES}
+#)
 
 
 #############

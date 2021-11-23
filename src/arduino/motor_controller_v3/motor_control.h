@@ -14,7 +14,7 @@
 #define PIN_PWM_RIGHT 8
 #define PIN_DIR_RIGHT 9
 #define NUM 2 // モータの個数 0がleft, 1がright
-#define LEDPIN 5
+#define LEDPIN 18
 //------------------------------------------------
 //  extern宣言
 //------------------------------------------------

@@ -1,4 +1,4 @@
-// まだ未完成、LED光らせるのができない
+// セットアップ完了時にLEDも光らせる（NAVIが停止中に光らせる）
 #include <ros/ros.h>
 #include <tf/transform_listener.h>
 #include <tf/transform_datatypes.h>
@@ -6,7 +6,6 @@
 #include <math.h>
 #include <sensor_msgs/Joy.h>
 #include <visualization_msgs/Marker.h>
-#include <std_msgs/Int32.h>
 
 // global変数 // 
 const int pt = 5; //目標地点の個数
@@ -25,7 +24,7 @@ int dismin(const double &x, const double &y, int &sum, double dotpath[][2]);
 void joyCb(const sensor_msgs::Joy &joy_msg);
 
 int main(int argc, char** argv){
-  ros::init(argc, argv, "pure_pursuit_loop_v2");
+  ros::init(argc, argv, "pure_pursuit_LED");
   ros::NodeHandle nh;
   ros::NodeHandle pnh("~");
   
@@ -80,12 +79,9 @@ int main(int argc, char** argv){
   // pubsub宣言 //
   ros::Publisher cmd_pub = nh.advertise<geometry_msgs::Twist>("cmd_vel", 10);
   ros::Publisher marker_pub = nh.advertise<visualization_msgs::Marker>("marker", 10);
-  ros::Publisher led_pub = nh.advertise<std_msgs::Int32>("LED", 1);
   ros::Subscriber joy_sub = nh.subscribe("joy", 10, joyCb);
   tf::TransformListener listener;
   ros::Rate rate(FRIQUENCE);
-  std_msgs::Int32 led_mode;
-  led_mode.data = 0;
   
   while(nh.ok()){
     rate.sleep();
@@ -110,14 +106,14 @@ int main(int argc, char** argv){
       x = tf.getOrigin().x();
       y = tf.getOrigin().y();
       yaw = tf::getYaw(tf.getRotation());
-      led_mode.data = 1;
     }
     catch(tf::TransformException ex){
       ROS_ERROR("%s", ex.what());
-      //led_mode.data = 1;
       ros::Duration(1.0).sleep();
       continue;
     }
+    // 正常時にLEDは消灯する
+    cmd.linear.z = 0;
     
     // 最も近い点を選択 //
     static int pose = 0;
@@ -142,9 +138,11 @@ int main(int argc, char** argv){
     // 車速と角速度の算出 //
     cmd.linear.x = vel;
     cmd.angular.z = 2.0 * vel * sin(alpha) / L;
-    if(stap){ // naviの停止コマンド
+    // naviの停止コマンド //
+    if(stap){ 
       cmd.linear.x = 0.0;
       cmd.angular.z = 0.0;
+      cmd.linear.z = 1;
     }
     
     // pub配信 //
@@ -152,7 +150,6 @@ int main(int argc, char** argv){
     marker_pub.publish(points);
     marker_pub.publish(npoint);
     marker_pub.publish(gpoint);
-    led_pub.publish(led_mode);
   }
   return 0;
 }
