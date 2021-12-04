@@ -140,9 +140,10 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/navi_node.cpp)
-add_executable(odometry src/odometry.cpp)
+
+#add_executable(odometry src/odometry.cpp)
 add_executable(odometryLED src/odometryLED.cpp)
-add_executable(controller5 src/controller5.cpp)
+#add_executable(controller5 src/controller5.cpp)
 add_executable(controllerLED src/controllerLED.cpp)
 #add_executable(make_goal src/make_goal.cpp)
 #add_executable(pure_pursuit src/pure_pursuit.cpp)
@@ -161,9 +162,10 @@ add_executable(pure_pursuit_LED src/pure_pursuit_LED.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(odometry ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+#add_dependencies(odometry ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(odometryLED ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(controller5 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#add_dependencies(controller5 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(controllerLED ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 #add_dependencies(make_goal ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 #add_dependencies(pure_pursuit ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
@@ -177,15 +179,16 @@ add_dependencies(pure_pursuit_LED ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_E
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(odometry
-  ${catkin_LIBRARIES}
-)
+
+#target_link_libraries(odometry
+#  ${catkin_LIBRARIES}
+#)
 target_link_libraries(odometryLED
   ${catkin_LIBRARIES}
 )
-target_link_libraries(controller5
-  ${catkin_LIBRARIES}
-)
+#target_link_libraries(controller5
+#  ${catkin_LIBRARIES}
+#)
 target_link_libraries(controllerLED
   ${catkin_LIBRARIES}
 )
