@@ -8,7 +8,7 @@
   <arg name="odometry"		  default="true"/>
   <arg name="map_server"	  default="true"/>
   <arg name="amcl"	      	default="true"/>
-  <arg name="rviz"		      default="true"/>
+  <arg name="rviz"		      default="false"/>
   <arg name="pure_pursuit"	default="true"/>
 
   <arg name="move_base"		default="false"/>
@@ -23,7 +23,7 @@
 
   <group if="$(arg controller)">
     <node name="controller" pkg="navi" type="controllerLED" output="screen" required="true">
-      <param name="kv" value="0.45"/> <!-- value="0.45" -->
+      <param name="kv" value="0.46"/> <!-- value="0.45" -->
       <param name="kw" value="1.50"/> <!-- value="1.50" -->
       <param name="d"  value="0.125"/>
       <param name="kp" value="130.0"/>
@@ -86,7 +86,7 @@
       <param name="FRIQUENCE" value="20"/>
       <param name="den" value="200"/>
       <param name="ahed" value="15"/>
-      <param name="vel" value="0.45"/>
+      <param name="vel" value="0.46"/>
       <param name="last" value="80"/>
     </node>
   </group>
